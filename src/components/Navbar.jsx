@@ -191,7 +191,7 @@ const Navbar = (props) => {
                 alt="logo"
                 width={100}
                 height={5}
-                className="w-20 sm:w-30"
+                className="w-28 sm:w-30"
               />
             </Link>
           </div>

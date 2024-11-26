@@ -46,8 +46,8 @@ const HeroSection = () => {
               {/* Low rise home for <span className="text-[#dc2222]">everyone</span> */}
               {/* Search for your low rise home🏠 */}
               {/* Find your <span className="text-primary-green uppercase">low rise</span> home 🏠 */}
-              <span className="text-primary-green">Low rise</span> home for
-              everyone
+              Find your home in
+              <span className="text-primary-green"> West GTA</span>
               {/* Find <span className="text-primary-green uppercase">low rise</span> home */}
             </h2>
 
@@ -76,7 +76,7 @@ const HeroSection = () => {
             <div className="text-medium sm:text-xl mt-2 text-center">
               Find{" "}
               <span className="font-bold">
-                low rise homes for sale or lease
+                West GTA homes for sale or lease
               </span>{" "}
               across Ontario!
             </div>

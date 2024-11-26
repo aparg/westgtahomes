@@ -43,7 +43,7 @@ const HotListings = ({ salesData }) => {
             isMobileView ? "pt-3" : "pt-3"
           }`}
         >
-          Newest Arrival - Low rise homes listed for sale in past 24 hours
+          Newest Arrival - West GTA homes listed for sale in past 24 hours
         </h3>
       </div>
       {/* <div className="w-full absolute top-[-50px] z-[999]">

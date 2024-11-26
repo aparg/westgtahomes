@@ -16,7 +16,7 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        "primary-green": "#EE4266",
+        "primary-green": "#0097B2",
         "light-lime": "#e1f6b2",
         "primary-red": "#eb7e6c",
         "medium-black": "#222222",
@@ -30,7 +30,7 @@ module.exports = {
         autosuggest:
           "0px 5px 5px rgba(238, 66, 102, 0.2), 5px 0 5px rgba(238, 66, 102, 0.2), -5px 0 5px rgba(238, 66, 102, 0.2)",
         "black-box-shadow": "rgba(0, 0, 0, 0.12) 20px 20px 20px",
-        btn: "0 0 0.7em #EE4266",
+        btn: "0 0 0.7em #0097B2",
       },
       aspectRatio: {
         "16/14": "16/14",

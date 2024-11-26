@@ -57,14 +57,14 @@ const ContactForm = () => {
         />
 
         <p className="text-xs text-gray-500 text-center">
-          Low rise is an online resale homes database for properties in Canada.
-          Low rise curates the list of homes that are publicly available on the
-          internet and does not take part in any real estate transactions. Be
-          advised the information provided on this page could be outdated or
-          inaccurate. By submitting the above form, you consent to real estate
-          agents advertising on this page to connect with you. We may share your
-          info with our partners or advertisers to help you with your questions.
-          You can unsubscribe at any time by emailing us.
+          Westgtahomes is an online resale homes database for properties in
+          Canada. Westgtahomes.ca curates the list of homes that are publicly
+          available on the internet and does not take part in any real estate
+          transactions. Be advised the information provided on this page could
+          be outdated or inaccurate. By submitting the above form, you consent
+          to real estate agents advertising on this page to connect with you. We
+          may share your info with our partners or advertisers to help you with
+          your questions. You can unsubscribe at any time by emailing us.
         </p>
 
         <button
