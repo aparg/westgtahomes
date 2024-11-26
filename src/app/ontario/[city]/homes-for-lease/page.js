@@ -4,18 +4,18 @@ import dynamic from "next/dynamic";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFIrstLetter";
 import { getSalesData } from "../../../../api/getSalesData";
 import { ImSpinner } from "react-icons/im";
-
-const FiltersWithSalesList = dynamic(
-  () => import("@/components/FiltersWithSalesList"),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="flex justify-center align-item-center">
-        <ImSpinner size={24} />
-      </div>
-    ),
-  }
-);
+import FiltersWithSalesList from "@/components/FiltersWithSalesList";
+// const FiltersWithSalesList = dynamic(
+//   () => import("@/components/FiltersWithSalesList"),
+//   {
+//     ssr: false,
+//     loading: () => (
+//       <div className="flex justify-center align-item-center">
+//         <ImSpinner size={24} />
+//       </div>
+//     ),
+//   }
+// );
 
 const INITIAL_LIMIT = 30;
 const page = async ({ params }) => {
