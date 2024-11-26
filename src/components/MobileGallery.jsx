@@ -1,10 +1,10 @@
 "use client";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-
-const LightGallery = dynamic(() => import("lightgallery/react"), {
-  ssr: false,
-});
+import LightGallery from "lightgallery/react";
+// const LightGallery = dynamic(() => import("lightgallery/react"), {
+//   ssr: false,
+// });
 // import styles
 import "lightgallery/css/lightgallery.css";
 import "lightgallery/css/lg-zoom.css";
