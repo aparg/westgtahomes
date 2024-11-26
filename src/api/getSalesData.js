@@ -7,12 +7,11 @@ export const getSalesData = async (offset, limit, city, listingType) => {
     let selectQuery = `${
       city && `Municipality=${city || ""},`
     }SaleLease='Sale'`;
-    const westgtahomesOnly = `TypeOwnSrch='.S.',TypeOwnSrch='.D.',TypeOwnSrch='.A.',TypeOwnSrch='.J.',TypeOwnSrch='.K.'`;
+
     const queriesArray = [
       `$select=${selectQuery}`,
       `$skip=${offset}`,
       `$limit=${limit}`,
-      `$selectOr=${westgtahomesOnly}`,
     ];
 
     const url = residential.properties.replace(
@@ -101,7 +100,6 @@ export const getSalesData = async (offset, limit, city, listingType) => {
 
 //for portfolio
 export const getFilteredRetsData = async (queryParams) => {
-  const westgtahomesOnly = `TypeOwnSrch='.S.',TypeOwnSrch='.D.',TypeOwnSrch='.A.',TypeOwnSrch='.J.',TypeOwnSrch='.K.'`;
   try {
     //all the necessary queries possible
     let selectQuery = `${
@@ -121,7 +119,6 @@ export const getFilteredRetsData = async (queryParams) => {
       queryParams.minListPrice || queryParams.washroom
         ? `minListPrice=${queryParams.minListPrice},minWashrooms=${queryParams.washroom}`
         : "";
-    let selectOrQuery = westgtahomesOnly;
 
     if (queryParams.houseType) {
       const houseTypeQuery = `,TypeOwnSrch='value'`;
@@ -152,12 +149,12 @@ export const getFilteredRetsData = async (queryParams) => {
     if (queryParams.propertyType == "commercial") {
       url = commercial.properties.replace(
         "$query",
-        `?$select=${selectQuery}&$skip=${skipQuery}&$limit=${limitQuery}&$range=${rangeQuery}&$selectOr=${selectOrQuery}`
+        `?$select=${selectQuery}&$skip=${skipQuery}&$limit=${limitQuery}&$range=${rangeQuery}`
       );
     } else {
       url = residential.properties.replace(
         "$query",
-        `?$select=${selectQuery}&$skip=${skipQuery}&$limit=${limitQuery}&$range=${rangeQuery}&$selectOr=${selectOrQuery}`
+        `?$select=${selectQuery}&$skip=${skipQuery}&$limit=${limitQuery}&$range=${rangeQuery}`
       );
     }
     const options = {

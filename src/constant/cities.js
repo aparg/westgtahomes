@@ -5,7 +5,7 @@ const citiesWithProvinces = [
   { city: "Milton", province: "Ontario" },
   { city: "Georgetown", province: "Ontario" },
   { city: "Halton Hills", province: "Ontario" },
-  { city: "Caledon", province: "Ontario" },
+  { city: "Etibocoke", province: "Ontario" },
   { city: "Burlington", province: "Ontario" },
 ];
 
