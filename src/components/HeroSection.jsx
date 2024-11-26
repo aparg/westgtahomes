@@ -43,7 +43,7 @@ const HeroSection = () => {
               className="absolute z-[-1] object-cover w-full h-full top-0 left-0 opacity-65"
             ></img> */}
             <h2 className="text-[2.5rem]/[3rem] sm:text-[4rem] font-bold text-center drop-shadow-md dm-sans">
-              {/* Low rise home for <span className="text-[#dc2222]">everyone</span> */}
+              {/* West GTA Homes home for <span className="text-[#dc2222]">everyone</span> */}
               {/* Search for your low rise home🏠 */}
               {/* Find your <span className="text-primary-green uppercase">low rise</span> home 🏠 */}
               Find your home in

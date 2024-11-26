@@ -1,14 +1,20 @@
 "use client";
-import React, { useState, useCallback, useMemo, useEffect } from "react";
+import React, {
+  useState,
+  useCallback,
+  useMemo,
+  useEffect,
+  useRef,
+} from "react";
 import {
   Dropdown,
   DropdownTrigger,
   DropdownSection,
   DropdownMenu,
   DropdownItem,
-  Button,
   Input,
   Modal,
+  Button,
   ModalContent,
   ModalHeader,
   ModalBody,
@@ -286,25 +292,6 @@ const Filters = ({ filterState, setFilterState, fetchFilteredData }) => {
           </div>
         ) : null} */}
       </div>
-
-      {/* {isMobileView ? (
-        <div className="container-fluid w-[90%] sm:w-auto">
-          <PriceRangeFilterBottom
-            name="priceRange"
-            value={filterState.priceRange}
-            setFilterState={setFilterState}
-            handleFilterChange={handleFilterChange}
-            minMaxPrice={minMaxPrice}
-          />
-        </div>
-      ) : null} */}
-      {console.log(
-        Object.keys(allPriceRanges).find(
-          (opt) =>
-            allPriceRanges[opt].min == filterState?.priceRange?.min &&
-            allPriceRanges[opt].max == filterState?.priceRange?.max
-        )
-      )}
       <div className="flex justify-center sm:justify-start">
         <IndividualFilterButtonNoLink
           options={
@@ -333,8 +320,7 @@ const Filters = ({ filterState, setFilterState, fetchFilteredData }) => {
   );
 };
 
-const IndividualFilter = ({
-  city,
+const CustomDropdown = ({
   options,
   name,
   value,
@@ -342,74 +328,135 @@ const IndividualFilter = ({
   isMobileView,
   isMulti = false,
   defaultValue,
+  city,
   saleLease,
-  unselectedValue = null,
 }) => {
-  const [selectedKeys, setSelectedKeys] = useState(() =>
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedValues, setSelectedValues] = useState(
     isMulti ? [...value] : [value]
   );
+  const dropdownRef = useRef(null);
 
-  const handleKeyChange = (newKey) => {
-    setSelectedKeys(newKey);
-    handleFilterChange(name, getSelectedValue(newKey));
+  const handleClickOutside = useCallback((event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [handleClickOutside]);
+
+  const handleSelect = (option) => {
+    let newValues;
+    if (isMulti) {
+      newValues = selectedValues.includes(option)
+        ? selectedValues.filter((val) => val !== option)
+        : [...selectedValues, option];
+    } else {
+      newValues = [option];
+      setIsOpen(false);
+    }
+
+    setSelectedValues(newValues);
+    handleFilterChange(name, newValues.join(", ").replaceAll("_", " "));
   };
 
-  const getSelectedValue = useCallback(
-    (key) => Array.from(key).join(", ").replaceAll("_", " "),
-    [selectedKeys]
-  );
-
   return (
-    <Dropdown>
-      {console.log(getSelectedValue(selectedKeys))}
-      {console.log(defaultValue)}
-      <DropdownTrigger disableAnimation={true}>
-        <Button
-          variant="faded"
-          className={`capitalize text-xs sm:text-sm h-[28px] sm:h-[34px] bg-white rounded-full ${
-            isMobileView && "px-1 gap-1 min-w-unit-0 min-w-10"
-          } ${
-            getSelectedValue(selectedKeys) !== defaultValue &&
-            `${bgColor[name]} ${textColor[name]} border-primary-green`
-          }`}
-        >
-          {getSelectedValue(selectedKeys)}
-          {/* <i className="bi bi-chevron-down" style={{ fontSize: "0.7rem" }}></i> */}
-          <span className="mt-1" color="#111111">
-            <FaChevronDown size={10} />
-          </span>
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu
-        aria-label={name}
-        disallowEmptySelection
-        selectionMode={isMulti ? "multiple" : "single"}
-        selectedKeys={selectedKeys}
-        onSelectionChange={handleKeyChange}
+    <div className="inline-block" ref={dropdownRef}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={`
+          flex items-center justify-between
+          capitalize text-xs sm:text-sm h-[28px] sm:h-[34px] 
+          rounded-full px-3 border
+          ${isMobileView ? "px-1 gap-1 min-w-[40px]" : "min-w-[120px]"}
+          ${
+            selectedValues[0] !== defaultValue
+              ? `bg-primary-green text-white border-primary-green`
+              : "border-gray-300 bg-white "
+          }
+          hover:shadow-md transition-all text-center
+        `}
       >
-        {options.map((option) => {
-          if (name == "type") {
+        <span className="truncate">
+          {selectedValues.join(", ").replaceAll("_", " ")}
+        </span>
+        <FaChevronDown
+          size={10}
+          className={`ml-2 transition-transform ${isOpen ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {isOpen && (
+        <div
+          className={`
+            min-w-[200px] max-h-[300px] overflow-y-auto
+            bg-white rounded-lg shadow-lg
+            border border-gray-200
+            mt-2
+          `}
+          style={{
+            position: "absolute",
+            zIndex: 1000,
+            marginTop: "8px",
+            boxShadow:
+              "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+          }}
+        >
+          {options.map((option) => {
+            if (name === "type") {
+              const url = generateURL({
+                cityVal: city,
+                houseTypeVal: option,
+                saleLeaseVal: saleLease,
+              });
+
+              return (
+                <Link
+                  key={option}
+                  href={url}
+                  className="
+                    block w-full px-4 py-2
+                    hover:bg-gray-100 
+                    text-sm text-gray-700
+                    cursor-pointer
+                  "
+                >
+                  {option}
+                </Link>
+              );
+            }
+
             return (
-              <DropdownItem
+              <div
                 key={option}
-                href={generateURL({
-                  cityVal: city,
-                  houseTypeVal: option,
-                  saleLeaseVal: saleLease,
-                })}
+                onClick={() => handleSelect(option)}
+                className={`
+                  px-4 py-2
+                  hover:bg-gray-100 
+                  text-sm cursor-pointer
+                  ${
+                    selectedValues.includes(option)
+                      ? "bg-gray-50 text-primary-green font-medium"
+                      : "text-gray-700"
+                  }
+                `}
               >
                 {option}
-              </DropdownItem>
+              </div>
             );
-          } else return <DropdownItem key={option}>{option}</DropdownItem>;
-        })}
-      </DropdownMenu>
-    </Dropdown>
-    // <Dropdown
-    //   name="House Type"
-    //   options={[{ name: "test", link: "/text" }]}
-    // ></Dropdown>
+          })}
+        </div>
+      )}
+    </div>
   );
+};
+
+// Replace the IndividualFilter component with CustomDropdown
+const IndividualFilter = (props) => {
+  return <CustomDropdown {...props} />;
 };
 
 //slider for price

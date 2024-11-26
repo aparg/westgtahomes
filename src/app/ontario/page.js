@@ -2,18 +2,18 @@ import dynamic from "next/dynamic";
 import { ImSpinner } from "react-icons/im";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CanadianCitiesShowcase from "@/components/CanadianCitiesShowcase";
-
-const FiltersWithSalesList = dynamic(
-  () => import("@/components/FiltersWithSalesList"),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="flex justify-center align-item-center">
-        <ImSpinner size={24} />
-      </div>
-    ),
-  }
-);
+import FiltersWithSalesList from "@/components/FiltersWithSalesList";
+// const FiltersWithSalesList = dynamic(
+//   () => import("@/components/FiltersWithSalesList"),
+//   {
+//     ssr: false,
+//     loading: () => (
+//       <div className="flex justify-center align-item-center">
+//         <ImSpinner size={24} />
+//       </div>
+//     ),
+//   }
+// );
 
 export const metadata = {
   title: "Ontario Properties | Westgtahomes.ca",

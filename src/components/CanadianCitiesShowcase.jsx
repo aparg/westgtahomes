@@ -20,17 +20,14 @@ const CityCard = ({ name, imageUrl }) => (
 
 const CanadianCitiesShowcase = () => {
   const cities = [
-    { name: "Toronto", imageUrl: "/images/toronto.jpg" },
-    { name: "Ottawa", imageUrl: "/images/ottawa.jpg" },
-    // object for these cities
     { name: "Mississauga", imageUrl: "/images/mississauga.jpg" },
-    { name: "Ajax", imageUrl: "/images/ajax.jpg" },
-    { name: "Barrie", imageUrl: "/images/barrie.jpg" },
     { name: "Brampton", imageUrl: "/images/brampton.jpg" },
-    { name: "Pickering", imageUrl: "/images/pickering.jpg" },
-    { name: "Hamilton", imageUrl: "/images/hamilton.jpg" },
-    // { name: "Oakville", imageUrl: "/images/oakville.jpg" },
-    // Add more cities as needed
+    { name: "Oakville", imageUrl: "/images/oakville.jpg" },
+    { name: "Milton", imageUrl: "/images/milton.jpg" },
+    { name: "Burlington", imageUrl: "/images/burlington.jpg" },
+    { name: "Georgetown", imageUrl: "/images/georgetown.jpg" },
+    { name: "Etobicoke", imageUrl: "/images/etobicoke.png" },
+    { name: "Vaughan", imageUrl: "/images/vaughan.jpg" },
   ];
 
   return (

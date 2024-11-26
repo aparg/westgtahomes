@@ -21,10 +21,10 @@ export const metadata = {
 export default async function Home() {
   const INITIAL_LIMIT = 4;
   const INITIAL_OFFSET = 0;
-  const TORONTOHOMES = await getSalesData(
+  const BURLINGTONHOMES = await getSalesData(
     INITIAL_OFFSET,
     INITIAL_LIMIT,
-    "Toronto"
+    "Burlington"
   );
   const BRAMPTONHOMES = await getSalesData(
     INITIAL_OFFSET,
@@ -93,11 +93,11 @@ export default async function Home() {
       <MobilePromo></MobilePromo>
       <section className="mx-auto max-w-[90%]">
         <PropertyDisplaySection
-          title="Explore homes in Toronto"
-          subtitle={""}
-          exploreAllLink={generateURL({ cityVal: "Toronto" })}
+          title="Explore homes in Brampton"
+          subtitle=""
+          exploreAllLink={generateURL({ cityVal: "Brampton" })}
         >
-          <Slider data={TORONTOHOMES} type="resale" />
+          <Slider data={BRAMPTONHOMES} type="resale" />
         </PropertyDisplaySection>
         <CanadianCitiesShowcase />
         <PropertiesDisplayer
@@ -107,13 +107,15 @@ export default async function Home() {
           }
           data={HOUSEWITHFIREPLACES}
         />
+
         <PropertyDisplaySection
-          title="Explore homes in Brampton"
+          title="Explore homes in Mississauga"
           subtitle=""
-          exploreAllLink={generateURL({ cityVal: "Brampton" })}
+          exploreAllLink={generateURL({ cityVal: "Mississauga" })}
         >
-          <Slider data={BRAMPTONHOMES} type="resale" />
+          <Slider data={MISSISAUGAHOMES} type="resale" />
         </PropertyDisplaySection>
+
         <PropertiesDisplayer
           topic={"Separate Entrance"}
           subtitle={
@@ -123,13 +125,6 @@ export default async function Home() {
           imageGradient="#99531b"
           data={HOUSEWITHSEPARATEENTRANCE}
         />
-        <PropertyDisplaySection
-          title="Explore homes in Mississauga"
-          subtitle=""
-          exploreAllLink={generateURL({ cityVal: "Mississauga" })}
-        >
-          <Slider data={MISSISAUGAHOMES} type="resale" />
-        </PropertyDisplaySection>
 
         <PropertyDisplaySection
           title="Explore homes in Oakville"
@@ -137,6 +132,13 @@ export default async function Home() {
           exploreAllLink={generateURL({ cityVal: "Oakville" })}
         >
           <Slider data={OAKVILLEHOMES} type="resale" />
+        </PropertyDisplaySection>
+        <PropertyDisplaySection
+          title="Explore homes in Burlington"
+          subtitle={""}
+          exploreAllLink={generateURL({ cityVal: "Toronto" })}
+        >
+          <Slider data={BURLINGTONHOMES} type="resale" />
         </PropertyDisplaySection>
         <PropertyDisplaySection
           title="The westgtahomes Insights"
