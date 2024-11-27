@@ -196,7 +196,7 @@ const Navbar = (props) => {
             </Link>
           </div>
 
-          <div className="flex items-center rounded-md sm:w-[35%] ms-0 sm:ms-3 ">
+          <div className="flex items-center rounded-md sm:w-[30%] ms-0 sm:ms-3 ">
             <div className="hidden sm:block w-full">
               <SearchBar numberOfSuggestions={4} small={true} />
             </div>
@@ -338,7 +338,7 @@ const Navbar = (props) => {
               Contact{" "}
             </Link>
             <Link
-              href="tel:4168458996"
+              href="tel:6474094848"
               title=""
               className={`text-sm font-normal transition-all flex duration-200 ${
                 isHomePage &&
@@ -350,9 +350,9 @@ const Navbar = (props) => {
               }
              ${!isHomePage && "text-black"}`}
             >
-              <img src="/contact.png" className="w-12"></img>
+              <img src="/contact.jpg" className="w-12"></img>
               <div className="flex flex-col items-center justify-center">
-                <div className="text-lg font-bold">249-201-6665</div>
+                <div className="text-lg font-bold">647 409 4848</div>
                 <div className="text-xs">Speak with westgtahomes Team</div>
               </div>
             </Link>
@@ -416,7 +416,7 @@ const Navbar = (props) => {
                 Contact{" "}
               </Link>
               <Link
-                href="tel:4168458996"
+                href="tel:6474094848"
                 title=""
                 className={`text-sm font-normal transition-all duration-200 ${
                   isHomePage &&
@@ -429,9 +429,9 @@ const Navbar = (props) => {
              ${!isHomePage && "text-black"}`}
               >
                 <div className="flex items-center">
-                  <img src="/contact.png" className="w-12"></img>
+                  <img src="/contact.jpg" className="w-12"></img>
                   <div className="flex flex-col items-center justify-center">
-                    <div className="text-lg font-bold">(416) 845-8996</div>
+                    <div className="text-lg font-bold">647 409 4848</div>
                     <div className="text-xs">Speak with westgtahomes team</div>
                   </div>
                 </div>
