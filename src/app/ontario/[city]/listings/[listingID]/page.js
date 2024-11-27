@@ -99,6 +99,27 @@ const page = async ({ params }) => {
 
   return (
     <>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            let lastScroll = 0;
+            window.addEventListener('scroll', () => {
+              const navbar = document.querySelector('.main-navbar');
+              if (!navbar) return;
+              
+              const currentScroll = window.pageYOffset;
+              if (currentScroll > lastScroll && currentScroll > 100) {
+                // Scrolling down
+                navbar.style.transform = 'translateY(-100%)';
+              } else {
+                // Scrolling up
+                navbar.style.transform = 'translateY(0)';
+              }
+              lastScroll = currentScroll;
+            });
+          `,
+        }}
+      />
       <div className="flex justify-center min-[2000px]:max-w-[68%] mx-auto">
         <div>
           <script
@@ -117,10 +138,10 @@ const page = async ({ params }) => {
               <div className="hidden sm:block relative">
                 <Gallery data={imageURLs} />
                 <div className="space-x-2 order-2 sm:order-1 absolute bottom-2 left-2">
-                  <button className="bg-[#CC0B0B] p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
+                  <button className="bg-badge-color p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
                     <TimeAgo modificationTimestamp={main_data.TimestampSql} />
                   </button>
-                  <button className="bg-[#CC0B0B] p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
+                  <button className="bg-badge-color p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
                     <span>{main_data.TypeOwn1Out}</span>
                   </button>
                 </div>
@@ -134,12 +155,12 @@ const page = async ({ params }) => {
 
                     <BookingDate bannerImage={imageURLs[0]} />
                     {/* <NotesForProperties notes={notes} /> */}
-                    <div className="z-20 relative mt-12 sm:mt-24">
+                    {/* <div className="z-20 relative mt-12 sm:mt-24">
                       <h2 className="font-extrabold text-2xl sm:text-4xl mb-2">
                         Map View
                       </h2>
-                      {/* <Map main_data={main_data} /> */}
-                    </div>
+                      <Map main_data={main_data} />
+                    </div> */}
                   </div>
 
                   <div

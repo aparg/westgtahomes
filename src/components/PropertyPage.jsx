@@ -141,10 +141,10 @@ const PropertyPage = ({ main_data }) => {
               <h3 className="text-5xl font-bold">{price}</h3>
               {/* <button onClick={sendNotes}>Go!</button> */}
               <div className="space-x-2 block sm:hidden">
-                <button className="bg-[#CC0B0B] p-1 text-white text-xs font-bold mt-1 sm:my-0 w-fit-content rounded-md">
+                <button className="bg-badge-color p-1 text-white text-xs font-bold mt-1 sm:my-0 w-fit-content rounded-md">
                   <TimeAgo modificationTimestamp={main_data.TimestampSql} />
                 </button>
-                <button className="bg-[#CC0B0B] p-1 text-white text-xs font-bold mt-1 sm:my-0 w-fit-content rounded-md">
+                <button className="bg-badge-color p-1 text-white text-xs font-bold mt-1 sm:my-0 w-fit-content rounded-md">
                   <span>{main_data.TypeOwn1Out}</span>
                 </button>
               </div>

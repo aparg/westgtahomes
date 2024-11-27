@@ -182,7 +182,7 @@ const Navbar = (props) => {
     >
       <div className={`${isSticky && "sticky"}`}>
         <nav
-          className={`flex items-center justify-between h-14 sm:h-[3.5rem] max-w-[90%] mx-auto`}
+          className={`main-navbar flex items-center justify-between h-14 sm:h-[3.5rem] max-w-[90%] mx-auto`}
         >
           <div className="flex-shrink-0 flex h-full items-center mr-2">
             <Link href="/" className="logo d-flex items-center">
@@ -191,7 +191,7 @@ const Navbar = (props) => {
                 alt="logo"
                 width={100}
                 height={5}
-                className="w-28 sm:w-30"
+                className="w-28 sm:w-36"
               />
             </Link>
           </div>

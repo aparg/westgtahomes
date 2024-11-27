@@ -4,13 +4,13 @@ import { ChevronDown } from "lucide-react";
 const ContactForm = () => {
   return (
     <div className="max-w-2xl mx-auto p-4 sm:p-6 bg-white mb-[10rem] mt-[3rem]">
-      <img
+      {/* <img
         src="/contact-bottom.png"
         alt="Logo"
         className="mx-auto mb-8"
         width={400}
         height={400}
-      />
+      /> */}
       <h1 className="text-3xl font-bold text-center mb-2">
         Have any Questions ?
       </h1>

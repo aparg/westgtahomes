@@ -4,7 +4,13 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { allCities } from "@/constant/cities";
 import { generateURL } from "@/helpers/generateURL";
-import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaYoutube,
+  FaGlobe,
+  FaLinkedin,
+} from "react-icons/fa";
 import Image from "next/image";
 import NewsletterSignup from "./NewsletterSignup";
 
@@ -43,10 +49,83 @@ const Footer = ({ cities }) => {
               </ul>
             </div>
 
+            {/* Socials section */}
+
+            <div className="space-y-6 text-center">
+              <div>
+                <h3 className="text-2xl sm:text-5xl font-extrabold text-center mb-4 font-family2">
+                  Contact Us
+                </h3>
+                <Image
+                  src="/sam-valji.png"
+                  alt="Description"
+                  width={200}
+                  height={200}
+                  className="mx-auto mb-8"
+                />
+                <address className="not-italic text-sm">
+                  <p></p>
+                  <p>1155 North Service Rd W, Oakville, Ontario L6M0J6</p>
+                  <p>Phone: 647 409 4848</p>
+                  <p>
+                    Email:{" "}
+                    <Link
+                      href="mailto:info@westgtahomes.ca"
+                      className="text-blue-600 hover:underline"
+                    >
+                      info@westgtahomes.ca
+                    </Link>
+                  </p>
+                </address>
+              </div>
+            </div>
+
+            <div className="flex justify-center gap-8">
+              <Link
+                href="https://samvalji.ca/"
+                className="flex flex-col items-center group"
+                target="_blank"
+              >
+                <div className="bg-gray-100 p-6 rounded-full group-hover:bg-blue-100 transition-colors">
+                  <FaGlobe
+                    size={32}
+                    className="text-gray-600 group-hover:text-blue-600"
+                  />
+                </div>
+                <span className="mt-2 text-sm">Website</span>
+              </Link>
+              <Link
+                href="https://www.instagram.com/samvaljirealtor/"
+                className="flex flex-col items-center group"
+                target="_blank"
+              >
+                <div className="bg-gray-100 p-6 rounded-full group-hover:bg-pink-100 transition-colors">
+                  <FaInstagram
+                    size={32}
+                    className="text-gray-600 group-hover:text-pink-600"
+                  />
+                </div>
+                <span className="mt-2 text-sm">Instagram</span>
+              </Link>
+              <Link
+                href="https://www.linkedin.com/in/samvalji/"
+                className="flex flex-col items-center group"
+                target="_blank"
+              >
+                <div className="bg-gray-100 p-6 rounded-full group-hover:bg-blue-100 transition-colors">
+                  <FaLinkedin
+                    size={32}
+                    className="text-gray-600 group-hover:text-blue-600"
+                  />
+                </div>
+                <span className="mt-2 text-sm">LinkedIn</span>
+              </Link>
+            </div>
+
             {/* Main footer content */}
             <div className="flex flex-col items-center text-center">
               <div className="max-w-3xl">
-                <div className="flex justify-center">
+                <div className="flex justify-center gap-8 items-center">
                   <Link href="/">
                     <div className="flex justify-center mb-5">
                       <Image
@@ -75,48 +154,6 @@ const Footer = ({ cities }) => {
                   estate. Information deemed reliable but not guaranteed to be
                   accurate. Listing information updated daily.
                 </p>
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">Contact Us</h3>
-                    <address className="not-italic text-sm">
-                      <p></p>
-                      <p>8300 Woodbine Ave, Markham, ON L3R 9Y7</p>
-                      <p>Phone: 289-302-6322</p>
-                      <p>
-                        Email:{" "}
-                        <Link
-                          href="mailto:info@westgtahomes.ca"
-                          className="text-blue-600 hover:underline"
-                        >
-                          info@westgtahomes.ca
-                        </Link>
-                      </p>
-                    </address>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">Follow Us</h3>
-                    <div className="flex justify-center space-x-4">
-                      <Link
-                        href="https://www.facebook.com/profile.php?id=100078509119684"
-                        className="text-gray-600 hover:text-blue-600 transition-colors"
-                      >
-                        <FaFacebook size={24} />
-                      </Link>
-                      <Link
-                        href="https://www.instagram.com/dolphin_realty/"
-                        className="text-gray-600 hover:text-pink-600 transition-colors"
-                      >
-                        <FaInstagram size={24} />
-                      </Link>
-                      <Link
-                        href="https://www.youtube.com/watch?v=DOr8JTMaQG0&t=1s"
-                        className="text-gray-600 hover:text-blue-800 transition-colors"
-                      >
-                        <FaYoutube size={24} />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

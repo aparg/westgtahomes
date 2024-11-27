@@ -22,6 +22,7 @@ module.exports = {
         "medium-black": "#222222",
         "very-light-gray": "#f9f9f9",
         "gray-filter": "#e5e7eb",
+        "badge-color": "#0097B2",
       },
       boxShadow: {
         shuttle: "0 0 1rem 1px rgb(0 0 0 / 3%);",
