@@ -15,7 +15,7 @@ const SearchBar = ({
   const [displaySuggestions, setDisplaySuggestions] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const {isMobileView} = useDeviceView()
+  const { isMobileView } = useDeviceView();
   // Debouncing
   const handleChange = async (value) => {
     await getSuggestions(value);
@@ -44,64 +44,18 @@ const SearchBar = ({
     setSuggestions([...filteredCities, ...filteredProperties]);
   };
   const citiesWithProvinces = [
-    { city: "Barrie", province: "Ontario" },
-    { city: "Belleville", province: "Ontario" },
     { city: "Brampton", province: "Ontario" },
-    { city: "Brant", province: "Ontario" },
-    { city: "Brantford", province: "Ontario" },
-    { city: "Brockville", province: "Ontario" },
+
     { city: "Burlington", province: "Ontario" },
-    { city: "Cambridge", province: "Ontario" },
-    { city: "Clarence-Rockland", province: "Ontario" },
-    { city: "Cornwall", province: "Ontario" },
-    { city: "Dryden", province: "Ontario" },
-    { city: "Elliot Lake", province: "Ontario" },
-    { city: "Greater Sudbury", province: "Ontario" },
-    { city: "Guelph", province: "Ontario" },
-    { city: "Haldimand County", province: "Ontario" },
+
     { city: "Hamilton", province: "Ontario" },
-    { city: "Kawartha Lakes", province: "Ontario" },
-    { city: "Kenora", province: "Ontario" },
-    { city: "Kingston", province: "Ontario" },
+
     { city: "Kitchener", province: "Ontario" },
-    { city: "London", province: "Ontario" },
-    { city: "Markham", province: "Ontario" },
+
     { city: "Mississauga", province: "Ontario" },
-    { city: "Niagara Falls", province: "Ontario" },
-    { city: "Norfolk County", province: "Ontario" },
-    { city: "North Bay", province: "Ontario" },
-    { city: "Orillia", province: "Ontario" },
-    { city: "Oshawa", province: "Ontario" },
-    { city: "Ottawa", province: "Ontario" },
-    { city: "Owen Sound", province: "Ontario" },
-    { city: "Pembroke", province: "Ontario" },
-    { city: "Peterborough", province: "Ontario" },
-    { city: "Pickering", province: "Ontario" },
-    { city: "Port Colborne", province: "Ontario" },
-    { city: "Prince Edward County", province: "Ontario" },
-    { city: "Quinte West", province: "Ontario" },
-    { city: "Richmond Hill", province: "Ontario" },
-    { city: "Sarnia", province: "Ontario" },
-    { city: "Sault Ste Marie", province: "Ontario" },
-    { city: "St Catharines", province: "Ontario" },
-    { city: "St Thomas", province: "Ontario" },
-    { city: "Stratford", province: "Ontario" },
-    { city: "Temiskaming Shores", province: "Ontario" },
-    { city: "Thorold", province: "Ontario" },
-    { city: "Thunder Bay", province: "Ontario" },
-    { city: "Timmins", province: "Ontario" },
-    { city: "Toronto", province: "Ontario" },
     { city: "Vaughan", province: "Ontario" },
-    { city: "Waterloo", province: "Ontario" },
-    { city: "Welland", province: "Ontario" },
-    { city: "Windsor", province: "Ontario" },
-    { city: "Woodstock", province: "Ontario" },
-    { city: "Ajax", province: "Ontario" },
-    { city: "Whitby", province: "Ontario" },
-    { city: "Courtice", province: "Ontario" },
-    { city: "Bowmanville", province: "Ontario" },
-    { city: "Innisfil", province: "Ontario" },
-    { city: "Bradford", province: "Ontario" },
+    { city: "Milton", province: "Ontario" },
+    { city: "Oakville", province: "Ontario" },
   ];
 
   //style for input box
@@ -111,10 +65,11 @@ const SearchBar = ({
   } else if (!displaySuggestions) {
     inputBoxClass.push("border-1 border-gray-300");
   }
-  if (displaySuggestions) {
+  console.log(searchTerm.length);
+  if (displaySuggestions && searchTerm.length > 0) {
     inputBoxClass.push("border-1 border-black rounded-t-[28px]");
   } else {
-    inputBoxClass.push("rounded-[28px]");
+    inputBoxClass.push("rounded-[28px] border-black border-1");
   }
 
   return (
@@ -145,21 +100,19 @@ const SearchBar = ({
         <div className="flex items-center pr-1 pl-0 justify-center bg-white">
           {/* <CgSearch size="1.25rem" /> */}
           {!small && !isMobileView ? (
-            <Button
-              className={`bg-black rounded-full text-white font-medium`}
-            >
+            <Button className={`bg-black rounded-full text-white font-medium`}>
               {" "}
               Search{" "}
             </Button>
+          ) : small ? (
+            <CgSearch size="1.25rem" className="mr-2" />
           ) : (
-            small?
-            <CgSearch size="1.25rem" className="mr-2" />:
-            <CgSearch size="1.75rem" className="mr-2"/>
+            <CgSearch size="1.75rem" className="mr-2" />
           )}
         </div>
       </div>
       <div className="relative">
-        {displaySuggestions && (
+        {displaySuggestions && searchTerm.length > 0 && (
           <Autosuggest
             displaySuggestions={displaySuggestions}
             searchTerm={searchTerm}

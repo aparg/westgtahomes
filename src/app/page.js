@@ -71,14 +71,14 @@ export default async function Home() {
     INITIAL_LIMIT,
     "Milton"
   );
-  const fetchFireplacesData = async () => {
-    const response = await fetch(
-      "https://rets.dolphy.ca/residential/Properties/?$range=minFireplacesTotal=1&$limit=4",
-      { cache: "no-cache" }
-    );
-    const data = await response.json();
-    return data.results;
-  };
+  // const fetchFireplacesData = async () => {
+  //   const response = await fetch(
+  //     "https://rets.dolphy.ca/residential/Properties/?$range=minFireplacesTotal=1&$limit=4",
+  //     { cache: "no-cache" }
+  //   );
+  //   const data = await response.json();
+  //   return data.results;
+  // };
   // const fetchSepEntranceData = async () => {
   //   let conditions = [];
   //   const properties = ["Basement1", "Basement2"];
