@@ -15,7 +15,7 @@ import Reviews from "@/components/Reviews";
 import Communities from "@/components/Communities";
 
 export const metadata = {
-  title: "westgtahomes.ca | Resale Properties in Ontario",
+  title: "West GTA Homes | Resale Properties in Ontario",
   description:
     "westgtahomes or westgtahomes.ca is Canada's Top Destination for westgtahomes homes such as Townhomes, Detached & Semi Detached homes. The home listings are updated every minutes. Check out 100s of properties listed in Canada.",
   keywords: "resale, properties, Ontario, Canada, low-rise, homes",
