@@ -1,7 +1,44 @@
+"use client";
 import React from "react";
 import { ChevronDown } from "lucide-react";
+import { sendEmail } from "@/api/resend";
 
 const ContactForm = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(e.target);
+    // Collect form data into credentials object
+    const credentials = {
+      username: e.target.username.value,
+      email: e.target.email.value,
+      phone: e.target.phone.value,
+      realtor: e.target.realtor.value,
+      message: e.target.message.value,
+      // Add other form fields as needed
+    };
+
+    // Update button state and show loading
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.innerHTML = "Submitting...";
+
+    try {
+      // Your form submission logic here
+      await sendEmail({
+        content: credentials,
+        page: "Homepage's Bottom Contact Form",
+        title: "Inquiry from Homepage's Bottom Contact Form",
+      });
+
+      // Handle successful submission
+      submitButton.innerHTML = "Submitted!";
+    } catch (error) {
+      // Handle error
+      submitButton.disabled = false;
+      submitButton.innerHTML = "Submit";
+      console.error("Submission error:", error);
+    }
+  };
   return (
     <div className="max-w-2xl mx-auto p-4 sm:p-6 bg-white mb-[10rem] mt-[3rem]">
       {/* <img
@@ -18,8 +55,9 @@ const ContactForm = () => {
         Speak to our Homes expert today
       </p>
 
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <input
+          id="username"
           type="text"
           placeholder="Full Name"
           className="w-full p-3 py-4 bg-[#f8f9fa] rounded-md focus:outline-black"
@@ -27,11 +65,13 @@ const ContactForm = () => {
 
         <div className="flex space-x-4">
           <input
+            id="email"
             type="email"
             placeholder="Your email"
             className="w-1/2 p-3 py-4 bg-[#f8f9fa] rounded-md focus:outline-black"
           />
           <input
+            id="phone"
             type="tel"
             placeholder="Phone"
             className="w-1/2 p-3 py-4 bg-[#f8f9fa] rounded-md focus:outline-black"
@@ -42,6 +82,7 @@ const ContactForm = () => {
             Are you a realtor or working with one?
           </label>
           <select
+            id="realtor"
             className="w-full p-3 py-4 bg-[#f8f9fa] rounded-md appearance-none focus:outline-black mt-5"
             defaultValue="No"
           >
@@ -52,6 +93,7 @@ const ContactForm = () => {
         </div>
 
         <textarea
+          id="message"
           placeholder="Enter your message"
           className="w-full p-3 bg-[#f8f9fa] rounded-md h-32"
         />

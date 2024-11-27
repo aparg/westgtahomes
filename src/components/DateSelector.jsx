@@ -5,7 +5,7 @@ import BookingDateOption from "./BookingDateOption";
 import TimingList from "./TimingList";
 import { sendEmail } from "@/api/resend";
 
-const DateSelector = ({ showBookingType = true }) => {
+const DateSelector = ({ showBookingType = true, address }) => {
   // const [scrollPosition, setScrollPosition] = useState(0);
   // const [maxScroll, setMaxScroll] = useState(0);
   const cardRef = useRef(null);
@@ -22,6 +22,9 @@ const DateSelector = ({ showBookingType = true }) => {
     phoneNumber: "",
     name: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const slideLeft = (e) => {
     e.preventDefault();
     const scrollContainer = scrollRef.current;
@@ -108,11 +111,19 @@ const DateSelector = ({ showBookingType = true }) => {
   };
 
   const submitData = async () => {
-    await sendEmail({
-      content: timing,
-      page: address,
-      title: `Inquiry for property ${address}`,
-    });
+    setIsSubmitting(true);
+    try {
+      await sendEmail({
+        content: timing,
+        page: address,
+        title: `Inquiry for property ${address}`,
+      });
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Failed to send email:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   return (
     <div>
@@ -206,8 +217,19 @@ const DateSelector = ({ showBookingType = true }) => {
 
         <input
           type="submit"
-          value="Schedule Tour"
-          className="px-4 py-2 bg-black text-white md:py-2 w-40 mb-3 rounded-full hover:cursor-pointer mx-auto text-lg"
+          value={
+            isSubmitting
+              ? "Submitting..."
+              : isSubmitted
+              ? "Sent!"
+              : "Schedule Tour"
+          }
+          disabled={isSubmitting}
+          className={`px-4 py-2 ${
+            isSubmitted ? "bg-green-600" : "bg-black"
+          } text-white md:py-2 w-40 mb-3 rounded-full hover:cursor-pointer mx-auto text-lg ${
+            isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+          }`}
           id="subbtn"
           onClick={submitData}
         />
