@@ -4,7 +4,7 @@ import { Resend } from "resend";
 import swal from "sweetalert";
 
 // const resend = new Resend("re_EwHkJKn7_BqC3Jj57KVoFXeELa5b74Qhd");
-const resend = new Resend("re_gt6Vfafr_KrsNXdvLfEcPzcfLnQrBMNxf");
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendEmail = async ({ content, page = null, title = null }) => {
   const contentArray = [];
@@ -14,7 +14,7 @@ export const sendEmail = async ({ content, page = null, title = null }) => {
   console.log("sending...");
   const { data, error } = await resend.emails.send({
     from: "westgtahomes <info@westgtahomes.ca>",
-    to: ["contact@homebaba.ca", "apargtm@gmail.com"],
+    to: ["suleman.valji@gmail.com"],
     subject: `Inquiry from ${page || "property"} in westgtahomes`,
     html: `<h1>${
       title || `Inquiry from ${page} page`
