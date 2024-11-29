@@ -282,12 +282,12 @@ const Navbar = (props) => {
               {" "}
               Buy{" "}
             </Link> */}
-            <Dropdown
+            {/* <Dropdown
               name="Rent"
               text={isSticky || !isHomePage ? "black" : "white"}
               options={rentOpts}
               width="auto"
-            />
+            /> */}
             <Dropdown
               name="Buy"
               text={isSticky || !isHomePage ? "black" : "white"}

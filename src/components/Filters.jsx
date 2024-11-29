@@ -192,14 +192,14 @@ const Filters = ({ filterState, setFilterState, fetchFilteredData }) => {
         }`}
         id="filters"
       >
-        <IndividualFilterButton
+        {/* <IndividualFilterButton
           options={saleLeaseOptions}
           name="saleLease"
           value={filterState.saleLease}
           handleFilterChange={handleFilterChange}
           city={filterState.city}
           type={filterState.type}
-        />
+        /> */}
 
         <div className="rounded-full sm:mr-4">
           {isMobileView ? (

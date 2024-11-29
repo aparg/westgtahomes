@@ -110,14 +110,14 @@ const SeeListings = () => {
                   Ontario Homes for Sale
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   href={generateURL({ saleLeaseVal: "lease" })}
                   className="hover:text-primary-green my-4 sm:font-medium text-sm"
                 >
                   Ontario Homes for Lease
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </section>
