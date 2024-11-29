@@ -15,9 +15,14 @@ import lgThumbnail from "lightgallery/plugins/thumbnail";
 import lgZoom from "lightgallery/plugins/zoom";
 import Link from "next/link";
 
-const Gallery = ({ data }) => {
+const Gallery = ({ data, photoCount = null }) => {
   const onInit = () => {
     console.log("lightGallery has been initialized");
+  };
+
+  const isImage = (index) => {
+    if (photoCount) return index < parseInt(photoCount);
+    else return index;
   };
 
   return (
@@ -33,7 +38,7 @@ const Gallery = ({ data }) => {
             {data?.length > 0 ? (
               data.map((url, index) => (
                 <Link
-                  href={`${url}`}
+                  href={`${isImage ? url : "/noimage.webp"}`}
                   key={index}
                   className={`gallery-item overflow-hidden rounded-[10px] ${
                     index === 0
@@ -41,16 +46,30 @@ const Gallery = ({ data }) => {
                       : "h-[100px] sm:h-[255px]"
                   } ${index >= 5 ? "hidden" : ""}`}
                 >
-                  <Image
-                    loader={() => url}
-                    src={url}
-                    width={500}
-                    height={index === 0 ? 800 : 207}
-                    className={`w-full h-full ${
-                      index === 0 ? "" : ""
-                    } object-cover object-center transform duration-200 hover:scale-110`}
-                    alt={`Image ${index + 1}`}
-                  />
+                  {console.log(isImage(index))}
+                  {isImage(index) ? (
+                    <Image
+                      loader={() => url}
+                      src={url}
+                      width={500}
+                      height={index === 0 ? 800 : 207}
+                      className={`w-full h-full ${
+                        index === 0 ? "" : ""
+                      } object-cover object-center transform duration-200 hover:scale-110`}
+                      alt={`Image ${index + 1}`}
+                    />
+                  ) : (
+                    <Image
+                      loader={() => "/noimage.webp"}
+                      src={"/noimage.webp"}
+                      width={500}
+                      height={index === 0 ? 800 : 207}
+                      className={`w-full h-full ${
+                        index === 0 ? "" : ""
+                      } object-cover object-center transform duration-200 hover:scale-110`}
+                      alt={`Image ${index + 1}`}
+                    />
+                  )}
                 </Link>
               ))
             ) : (

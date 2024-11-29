@@ -136,7 +136,7 @@ const page = async ({ params }) => {
             </div>
             <section className="padding-top w-full text-sm flex flex-col items-center justify-center gy-2 relative">
               <div className="hidden sm:block relative">
-                <Gallery data={imageURLs} />
+                <Gallery data={imageURLs} photoCount={main_data.PhotoCount} />
                 <div className="space-x-2 order-2 sm:order-1 absolute bottom-2 left-2">
                   <button className="bg-badge-color p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
                     <TimeAgo modificationTimestamp={main_data.TimestampSql} />
@@ -213,22 +213,22 @@ const page = async ({ params }) => {
 
 export default page;
 
-export async function generateMetadata({ params }, parent) {
-  const { listingID } = await params;
-  const parts = listingID.split("-");
-  const lastPart = parts[parts.length - 1];
-  const listingIDValue = lastPart;
-  const main_data = await fetchData(listingIDValue);
-  const imageURLs = generateImageURLs(listingIDValue);
-  return {
-    ...parent,
-    alternates: {
-      canonical: `https://westgtahomes.ca/listings/${slugGenerator(main_data)}`,
-    },
-    openGraph: {
-      images: await fetch(imageURLs[0]),
-    },
-    title: `${main_data?.Street} ${main_data?.StreetName} ${main_data?.StreetAbbreviation}`,
-    description: `${main_data?.TypeOwn1Out}.${main_data?.Municipality}`,
-  };
-}
+// export async function generateMetadata({ params }, parent) {
+//   const { listingID } = await params;
+//   const parts = listingID.split("-");
+//   const lastPart = parts[parts.length - 1];
+//   const listingIDValue = lastPart;
+//   const main_data = await fetchData(listingIDValue);
+//   const imageURLs = generateImageURLs(listingIDValue);
+//   return {
+//     ...parent,
+//     alternates: {
+//       canonical: `https://westgtahomes.ca/listings/${slugGenerator(main_data)}`,
+//     },
+//     openGraph: {
+//       images: await fetch(imageURLs[0]),
+//     },
+//     title: `${main_data?.Street} ${main_data?.StreetName} ${main_data?.StreetAbbreviation}`,
+//     description: `${main_data?.TypeOwn1Out}.${main_data?.Municipality}`,
+//   };
+// }
