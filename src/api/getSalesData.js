@@ -34,7 +34,12 @@ export const getSalesData = async (offset, limit, city, listingType) => {
   }
 };
 
-const getCommercialSalesData = async (offset, limit, city, listingType) => {
+export const getCommercialSalesData = async (
+  offset,
+  limit,
+  city,
+  listingType
+) => {
   try {
     let selectQuery = `${
       city && `Municipality=${city || ""},`
