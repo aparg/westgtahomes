@@ -148,8 +148,8 @@ const Footer = ({ cities }) => {
                   westgtahomes (“westgtahomes.ca”) is a real estate marketplace
                   platform owned by Sam Valji. westgtahomes refers potential
                   buyers to real estate agents that are licensed in the province
-                  where the respective property is located. Bay Street Group Inc
-                  is licensed as a real estate brokerage in Ontario.
+                  where the respective property is located. Newhome Inc is
+                  licensed as a real estate brokerage in Ontario.
                   <br />
                   <br />
                   IDX information is provided exclusively for consumers’
