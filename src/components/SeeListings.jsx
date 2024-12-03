@@ -25,34 +25,58 @@ const SeeListings = () => {
             <ul className="flex-col justify-center text-center">
               <li>
                 <Link
-                  href={generateURL({ cityVal: "Toronto" })}
+                  href={generateURL({ cityVal: "Oakville" })}
                   className="hover:text-primary-green my-4 sm:font-medium text-sm"
                 >
-                  Toronto Homes for Sale
+                  Oakville Homes for Sale
                 </Link>
               </li>
               <li>
                 <Link
-                  href={generateURL({ cityVal: "Ottawa" })}
+                  href={generateURL({ cityVal: "Burlington" })}
                   className="hover:text-primary-green my-4 sm:font-medium text-sm"
                 >
-                  Ottawa Homes for Sale
+                  Burlington Homes for Sale
                 </Link>
               </li>
               <li>
                 <Link
-                  href={generateURL({ cityVal: "Mississauga" })}
+                  href={generateURL({ cityVal: "Milton" })}
                   className="hover:text-primary-green my-4 sm:font-medium text-sm"
                 >
-                  Mississauga Homes for Sale
+                  Milton Homes for Sale
                 </Link>
               </li>
               <li>
                 <Link
-                  href={generateURL({ cityVal: "Ajax" })}
+                  href={generateURL({ cityVal: "Brampton" })}
                   className="hover:text-primary-green my-4 sm:font-medium text-sm"
                 >
-                  Ajax Homes for Sale
+                  Brampton Homes for Sale
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={generateURL({ cityVal: "Hamilton" })}
+                  className="hover:text-primary-green my-4 sm:font-medium text-sm"
+                >
+                  Hamilton Homes for Sale
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={generateURL({ cityVal: "Georgetown" })}
+                  className="hover:text-primary-green my-4 sm:font-medium text-sm"
+                >
+                  Georgetown Homes for Sale
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={generateURL({ cityVal: "Halton Hills" })}
+                  className="hover:text-primary-green my-4 sm:font-medium text-sm"
+                >
+                  Halton Hills Homes for Sale
                 </Link>
               </li>
             </ul>

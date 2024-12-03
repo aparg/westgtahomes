@@ -3,6 +3,7 @@ import React, { useState, useMemo, useEffect, useRef } from "react";
 //CONSTANT
 import useDeviceView from "@/helpers/useDeviceView";
 import ResaleCard from "./ResaleCard";
+import Logo from "./Logo";
 
 const plural = {
   Retail: " Businesses",
@@ -43,7 +44,13 @@ const HotListings = ({ salesData }) => {
             isMobileView ? "pt-3" : "pt-3"
           }`}
         >
-          Newest Arrival - West GTA homes listed for sale in past 24 hours
+          Newest arrival in west GTA area with{" "}
+          <span className="text-2xl font-extrabold tracking-wide">
+            west
+            <span className="text-primary-green">GTA</span>
+            homes
+          </span>{" "}
+          in past 24 hours
         </h3>
       </div>
       {/* <div className="w-full absolute top-[-50px] z-[999]">
