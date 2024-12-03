@@ -16,6 +16,7 @@ import { ImSpinner } from "react-icons/im";
 import HotListings from "./HotListings";
 import PageSelector from "./PageSelector";
 import Image from "next/image";
+import Logo from "./Logo";
 // import formatCurrency from "@/helpers/formatCurrency";
 // import FilterSubmit from "../FilterSubmit";
 
@@ -207,8 +208,7 @@ const FiltersWithSalesList = ({
             homeText,
             "for " + `${capitalizeFirstLetter(saleLeaseVal) || "Sale"}`,
           ].join(" ") + " "}{" "}
-          {city ? ` | ${capitalizeFirstLetter(city) || "Sale"}` : ""} |
-          Westgtahomes.ca
+          {city ? ` | ${capitalizeFirstLetter(city) || "Sale"}` : ""} | <Logo />
         </h1>
         <h2
           className="text-sm mb-5 mt-1 text-center sm:text-left"

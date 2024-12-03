@@ -360,7 +360,7 @@ const Navbar = (props) => {
                   <span className="font-bold">
                     west
                     <span className="text-primary-green font-bold">GTA</span>
-                    homes
+                    homes.ca
                   </span>{" "}
                   Team
                 </div>
@@ -442,7 +442,17 @@ const Navbar = (props) => {
                   <img src="/contact.jpg" className="w-12"></img>
                   <div className="flex flex-col items-center justify-center">
                     <div className="text-lg font-bold">647 409 4848</div>
-                    <div className="text-xs">Speak with westgtahomes team</div>
+                    <div className="text-xs">
+                      Speak with{" "}
+                      <span className="font-bold">
+                        west
+                        <span className="text-primary-green font-bold">
+                          GTA
+                        </span>
+                        homes.ca
+                      </span>{" "}
+                      Team
+                    </div>
                   </div>
                 </div>
               </Link>

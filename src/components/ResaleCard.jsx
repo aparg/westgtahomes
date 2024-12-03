@@ -122,7 +122,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
 
               {/* Property Tags */}
               <div className="absolute top-3 left-3 flex gap-2">
-                <span className="bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                <span className="bg-primary-green text-white px-2 py-1 rounded-full text-xs font-medium">
                   {curElem.TypeOwn1Out}
                 </span>
                 {curElem.ApproxSquareFootage && (
@@ -178,14 +178,10 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
                   <div className="flex items-center text-gray-700">
                     <img
                       src="/resale-card-img/garage.svg"
-                      className={`${small ? "w-3 h-3" : "w-4 h-4"} mr-1`}
+                      className="w-3 h-3 sm:w-4 sm:h-4 mr-1"
                       alt="garage"
                     />
-                    <span
-                      className={`${
-                        small ? "text-xs" : "text-sm"
-                      } whitespace-nowrap`}
-                    >
+                    <span className="text-xs sm:text-sm whitespace-nowrap">
                       {Math.floor(curElem.GarageSpaces)} Garage
                     </span>
                   </div>

@@ -52,7 +52,7 @@ export default function RootLayout({ children }) {
 
       <body className="bg-white text-black ">
         <NextTopLoader
-          color="#FF0000"
+          color="#c8b575"
           initialPosition={0.08}
           crawlSpeed={200}
           height={3}

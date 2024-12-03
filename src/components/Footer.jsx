@@ -33,8 +33,13 @@ const Footer = ({ cities }) => {
           <div className="space-y-24">
             {/* New homes section */}
             <div>
-              <h3 className="text-2xl sm:text-5xl font-extrabold text-center mb-12 font-family2 ">
-                Explore West GTA Homes For Sale In Canada
+              <h3 className="text-2xl sm:text-5xl font-extrabold text-center mb-12 font-family2 leading-[3rem]">
+                Explore and find you dream home with{" "}
+                <span className="font-extrabold tracking-wide leading-[4rem]">
+                  west
+                  <span className="text-primary-green">GTA</span>
+                  homes
+                </span>
               </h3>
               <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 text-sm">
                 {allCities.map((val, idx) => (
@@ -141,11 +146,10 @@ const Footer = ({ cities }) => {
                 </div>
                 <p className="text-sm leading-relaxed mb-8">
                   westgtahomes (“westgtahomes.ca”) is a real estate marketplace
-                  platform -owned by Homebaba technologies Inc. westgtahomes
-                  refers potential buyers to real estate agents that are
-                  licensed in the province where the respective property is
-                  located. Dolphin Realty is licensed as a real estate brokerage
-                  in Ontario.
+                  platform owned by Sam Valji. westgtahomes refers potential
+                  buyers to real estate agents that are licensed in the province
+                  where the respective property is located. Bay Street Group Inc
+                  is licensed as a real estate brokerage in Ontario.
                   <br />
                   <br />
                   IDX information is provided exclusively for consumers’

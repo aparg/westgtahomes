@@ -25,7 +25,7 @@ const HeroSection = () => {
     <div className="">
       <div className="mx-auto">
         <div
-          className="relative flex h-[50vh] sm:h-[70vh] flex-col lg:flex-row items-center justify-center pt-10 gap-x-10 lg:pb-20 gap-y-12 sm:gap-y-0 px-2 sm:px-0 bg-bottom bg-no-repeat"
+          className="relative flex h-[90vh] sm:h-[70vh] flex-col lg:flex-row items-center justify-center pt-10 gap-x-10 lg:pb-20 gap-y-12 sm:gap-y-0 px-2 sm:px-0 bg-bottom bg-no-repeat"
           // id="hero-section"
         >
           <div className="w-full z-10 pb-20 sm:w-screen flex flex-col items-center mb-10 lg:mb-0 order-2 sm:order-1 cover">
@@ -82,16 +82,16 @@ const HeroSection = () => {
             <div className="text-medium sm:text-xl mt-2 text-center">
               Explore homes that perfectly match your search around west GTA
             </div>
-            <div className="flex flex-row justify-between gap-x-20 mt-4">
+            <div className="flex flex-col md:flex-row justify-around md:justify-between sm:gap-x-20 mt-4">
               <Link
                 href="/ontario"
-                className="px-4 py-2 rounded-lg border-2 bg-black text-white font-bold transition-colors duration-300 hover:bg-primary-green hover:text-white"
+                className="px-4 py-2 rounded-lg border-2 bg-black text-white font-bold transition-colors duration-300 hover:bg-primary-green hover:text-white text-sm md:text-md"
               >
                 Homes Across Ontario
               </Link>
               <Link
                 href="/commercial/ontario"
-                className="px-4 py-2 rounded-lg border-2 bg-black text-white font-bold transition-colors duration-300 hover:bg-primary-green hover:text-white"
+                className="px-4 py-2 rounded-lg border-2 bg-black text-white font-bold transition-colors duration-300 hover:bg-primary-green hover:text-white text-sm md:text-md"
               >
                 Commercial Properties
               </Link>

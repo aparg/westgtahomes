@@ -20,21 +20,20 @@ const CityCard = ({ name, imageUrl }) => (
 
 const CanadianCitiesShowcase = () => {
   const cities = [
-    { name: "Mississauga", imageUrl: "/images/mississauga.jpg" },
-    { name: "Brampton", imageUrl: "/images/brampton.jpg" },
     { name: "Oakville", imageUrl: "/images/oakville.jpg" },
-    { name: "Milton", imageUrl: "/images/milton.jpg" },
     { name: "Burlington", imageUrl: "/images/burlington.jpg" },
+    { name: "Milton", imageUrl: "/images/milton.jpg" },
+    { name: "Brampton", imageUrl: "/images/brampton.jpg" },
+    { name: "Hamilton", imageUrl: "/images/hamilton.jpg" },
     { name: "Georgetown", imageUrl: "/images/georgetown.jpg" },
-    { name: "Etobicoke", imageUrl: "/images/etobicoke.png" },
-    { name: "Vaughan", imageUrl: "/images/vaughan.jpg" },
+    { name: "Halton Hills", imageUrl: "/images/halton-hills.jpg" },
   ];
 
   return (
     <div className="my-[5rem] sm:my-[10rem]">
       <div className="mx-auto">
         <h2 className="text-4xl font-bold text-center mb-2 mt-10">
-          Commercial Properties for sale in{" "}
+          Homes for sale in{" "}
           <span className="text-primary-green">your city </span>
           <span className="text-primary-green relative">
             <span className="absolute bottom-0 left-0 w-full h-1 bg-primary-gretext-primary-green rounded"></span>
