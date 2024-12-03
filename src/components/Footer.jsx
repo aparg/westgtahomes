@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import Image from "next/image";
 import NewsletterSignup from "./NewsletterSignup";
+import Logo from "./Logo";
 
 const Footer = ({ cities }) => {
   const pathname = usePathname();
@@ -128,12 +129,13 @@ const Footer = ({ cities }) => {
                 <div className="flex justify-center gap-8 items-center">
                   <Link href="/">
                     <div className="flex justify-center mb-5">
-                      <Image
+                      {/* <Image
                         src="/westgtahomeslogo.svg"
                         alt="westgtahomes Logo"
                         width={200}
                         height={200}
-                      />
+                      /> */}
+                      <Logo />
                     </div>
                   </Link>
                 </div>

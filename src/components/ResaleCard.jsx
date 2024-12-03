@@ -99,7 +99,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
   };
 
   return (
-    <section className="relative transition-all duration-200 transform bg-white group rounded-2xl p-0 hover:shadow-lg hover:rounded-t-2xl  hover:-translate-y-1 overflow-hidden">
+    <section className="relative bg-white border border-gray-200 hover:border-primary-green hover:shadow-lg rounded-lg transition-all duration-300 overflow-hidden">
       <Link
         href={generateURL({
           cityVal: curElem.Municipality,
@@ -107,137 +107,107 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
         })}
         className="text-black"
       >
-        <div className="lg:px-0 h-full w-full">
-          <div className={`flex flex-col overflow-hidden relative`}>
-            <div className={`${"h-52 sm:h-80"} overflow-hidden relative`}>
-              <div
-                className={`${
-                  small ? "h-44" : "h-52 sm:h-80"
-                } sm:h-80 relative z-10 rounded-t-2xl`}
-              >
-                <img
-                  className="object-cover w-full h-full transition-all duration-200 transform group-hover:scale-110 rounded-t-2xl"
-                  src={imgSrc}
-                  width="900"
-                  height="800"
-                  alt="property image"
-                  onError={handleImageError}
-                />
+        <div className="h-full w-full">
+          <div className="flex flex-col">
+            {/* Image Container */}
+            <div className="relative h-48 sm:h-64">
+              <img
+                className="object-cover w-full h-full"
+                src={imgSrc}
+                width="900"
+                height="800"
+                alt="property image"
+                onError={handleImageError}
+              />
 
-                {/* <div className="absolute inset-0 bg-gradient-to-b from-black to-transparent opacity-50"></div> */}
-              </div>
-
-              <div className="absolute bottom-3 left-2 flex flex-row z-20">
-                <div className="text-black text-[0.7rem] p-[3px] px-2 shadow-2xl rounded-md mx-1 bg-white flex items-center">
-                  {curElem.TypeOwn1Out}{" "}
-                </div>
+              {/* Property Tags */}
+              <div className="absolute top-3 left-3 flex gap-2">
+                <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-medium">
+                  {curElem.TypeOwn1Out}
+                </span>
                 {curElem.ApproxSquareFootage && (
-                  <div className="text-black text-[0.7rem] p-[3px] px-2 shadow-2xl rounded-md mx-1 bg-white items-center hidden sm:block">
-                    <img
-                      src="/resale-card-img/ruler.svg"
-                      className="w-3 mr-[2px] inline"
-                      alt="washrooms"
-                    />
-                    <span>{curElem.ApproxSquareFootage} Sq.Ft.</span>
-                  </div>
+                  <span className="bg-gray-800/80 text-white px-3 py-1 rounded-full text-xs font-medium hidden sm:block">
+                    {curElem.ApproxSquareFootage} Sq.Ft.
+                  </span>
                 )}
-                {/* <div className="text-black text-[0.7rem] p-[3px] px-2 shadow-2xl rounded-md mx-1 bg-white flex items-center">
-                </div> */}
               </div>
             </div>
-            <div className="flex-1 sm:px-3 pt-2 pb-4 px-2">
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
-                <h2 className="font-bold text-2xl sm:text-2xl items-center justify-start mt-2 sm:my-2">
-                  <span className="font-bold text-black">{price}</span>
+
+            {/* Content Container */}
+            <div className="p-4">
+              {/* Price and Timestamp */}
+              <div className="flex justify-between items-center mb-3">
+                <h2 className="text-2xl font-bold text-gray-900">
+                  {price}
                   {curElem.SaleLease === saleLease.lease.value && (
-                    <span> /mo</span>
+                    <span className="text-gray-600 text-sm"> /month</span>
                   )}
                 </h2>
-                <div className="text-xs font-medium text-badge-color mb-1 sm:mb-0">
+                <span className="text-xs text-gray-500">
                   <TimeAgo modificationTimestamp={curElem.TimestampSql} />
-                </div>
+                </span>
               </div>
-              {/* <p className="mb-0 fs-mine text-limit font-md pb-0">
-                  {" "}
-                  MLS® #{curElem.MLS}
-                </p> */}
-              <span className={`text-black text-xs`}>
-                <div className="flex flex-row justify-start">
-                  {curElem.Bedrooms && (
-                    <div className="flex items-center mr-3">
-                      <img
-                        src="/resale-card-img/bedrooms.svg"
-                        className="w-3 mr-[2px] inline"
-                        alt="bedrooms"
-                      />
-                      <span>
-                        {Math.floor(curElem.Bedrooms)}{" "}
-                        <span className="hidden sm:inline">Bed</span>
-                      </span>
-                    </div>
-                  )}
-                  {curElem.Washrooms && (
-                    <div className="flex items-center mr-3">
-                      <img
-                        src="/resale-card-img/bathrooms.svg"
-                        className="w-3 mr-[2px] inline"
-                        alt="washrooms"
-                      />
-                      <span>
-                        {Math.floor(curElem.Washrooms)}{" "}
-                        <span className="hidden sm:inline">Bath</span>
-                      </span>
-                    </div>
-                  )}
-                  {curElem.GarageSpaces && (
-                    <div className="flex items-center mr-3">
-                      <img
-                        src="/resale-card-img/garage.svg"
-                        className="w-3 mr-[2px] inline"
-                        alt="washrooms"
-                      />
-                      <span>
-                        {Math.floor(curElem.GarageSpaces)}{" "}
-                        <span className="hidden sm:inline">Garage</span>
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </span>
-              <div className="flex flex-row justify-between my-1">
-                <div className="text-black">
-                  <div className="text-dark text-sm">
-                    {curElem.StreetName ? (
-                      `${curElem.Street} ${curElem.StreetName}${" "}
-                    ${curElem.StreetAbbreviation} ${
-                        curElem.Municipality
-                      }, Ontario`
-                    ) : (
-                      <span className="p-4"></span>
-                    )}
+
+              {/* Property Features */}
+              <div className="flex gap-4 mb-3">
+                {curElem.Bedrooms && (
+                  <div className="flex items-center text-gray-700">
+                    <img
+                      src="/resale-card-img/bedrooms.svg"
+                      className={`${small ? "w-3 h-3" : "w-4 h-4"} mr-1`}
+                      alt="bedrooms"
+                    />
+                    <span className={small ? "text-xs" : "text-sm"}>
+                      {Math.floor(curElem.Bedrooms)} Beds
+                    </span>
                   </div>
-                </div>
+                )}
+                {curElem.Washrooms && (
+                  <div className="flex items-center text-gray-700">
+                    <img
+                      src="/resale-card-img/bathrooms.svg"
+                      className={`${small ? "w-3 h-3" : "w-4 h-4"} mr-1`}
+                      alt="washrooms"
+                    />
+                    <span className={small ? "text-xs" : "text-sm"}>
+                      {Math.floor(curElem.Washrooms)} Baths
+                    </span>
+                  </div>
+                )}
+                {curElem.GarageSpaces && (
+                  <div className="flex items-center text-gray-700">
+                    <img
+                      src="/resale-card-img/garage.svg"
+                      className={`${small ? "w-3 h-3" : "w-4 h-4"} mr-1`}
+                      alt="garage"
+                    />
+                    <span className={small ? "text-xs" : "text-sm"}>
+                      {Math.floor(curElem.GarageSpaces)} Garage
+                    </span>
+                  </div>
+                )}
               </div>
-              <div className="text-xs text-gray-600">MLS® {curElem.MLS}</div>
-              <div className="text-xs text-gray-600">
-                Listed by {curElem.ListBrokerage}
+
+              {/* Address */}
+              <p className="text-gray-600 text-sm mb-2">
+                {curElem.StreetName ? (
+                  `${curElem.Street} ${curElem.StreetName} ${curElem.StreetAbbreviation} ${curElem.Municipality}, Ontario`
+                ) : (
+                  <span className="p-4"></span>
+                )}
+              </p>
+
+              {/* MLS and Brokerage Info */}
+              <div className="pt-2 border-t border-gray-200">
+                <p className="text-xs text-gray-500">MLS® {curElem.MLS}</p>
+                <p className="text-xs text-gray-500">
+                  Listed by {curElem.ListBrokerage}
+                </p>
               </div>
             </div>
           </div>
         </div>
       </Link>
-      <div
-        className={`absolute ${
-          small ? "top-[8rem] sm:top-[10rem]" : "sm:top-[18.5rem] top-[9rem]"
-        } right-2 z-10`}
-      >
-        <Favorite
-          isFavorite={isFavorite}
-          toggleFavorite={toggleFavorite}
-          MLS={curElem.MLS}
-          size={4}
-        />
-      </div>
     </section>
   );
 };

@@ -205,9 +205,10 @@ const FiltersWithSalesList = ({
           {[
             capitalizeFirstLetter(requiredType),
             homeText,
-            "for " + capitalizeFirstLetter(saleLeaseVal),
+            "for " + capitalizeFirstLetter(saleLeaseVal) || "Sale",
           ].join(" ") + " "}{" "}
-          {city ? ` | ${capitalizeFirstLetter(city)}` : ""} | Westgtahomes.ca
+          {city ? ` | ${capitalizeFirstLetter(city) || "Sale"}` : ""} |
+          Westgtahomes.ca
         </h1>
         <h2
           className="text-sm mb-5 mt-1 text-center sm:text-left"

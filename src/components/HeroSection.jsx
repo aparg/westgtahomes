@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
 import { generateURL } from "@/helpers/generateURL";
+import Logo from "./Logo";
 
 const HouseTypeCard = ({ type, icon, link }) => (
   <Link href={link} className="text-black">
@@ -42,12 +43,17 @@ const HeroSection = () => {
               src="/hero-img.jpg"
               className="absolute z-[-1] object-cover w-full h-full top-0 left-0 opacity-65"
             ></img> */}
-            <h2 className="text-[2.5rem]/[3rem] sm:text-[4rem] font-bold text-center drop-shadow-md dm-sans">
+            <h2 className="text-[2.5rem]/[3rem] sm:text-[3.4rem] font-bold text-center drop-shadow-md dm-sans">
               {/* West GTA Homes home for <span className="text-[#dc2222]">everyone</span> */}
               {/* Search for your low rise home🏠 */}
               {/* Find your <span className="text-primary-green uppercase">low rise</span> home 🏠 */}
-              Find your home in
-              <span className="text-primary-green"> West GTA</span>
+              Find your homes with{" "}
+              <span className="text-[2.5rem]/[3rem] sm:text-[3.4rem] font-extrabold tracking-wide">
+                west
+                <span className="text-primary-green">GTA</span>
+                homes
+              </span>
+              {/* <span className="text-primary-green"> West GTA</span> */}
               {/* Find <span className="text-primary-green uppercase">low rise</span> home */}
             </h2>
 
@@ -74,11 +80,21 @@ const HeroSection = () => {
               />
             </div>
             <div className="text-medium sm:text-xl mt-2 text-center">
-              Find{" "}
-              <span className="font-bold">
-                West GTA homes for sale or lease
-              </span>{" "}
-              across Ontario!
+              Explore homes that perfectly match your search around west GTA
+            </div>
+            <div className="flex flex-row justify-between gap-x-20 mt-4">
+              <Link
+                href="/ontario"
+                className="px-4 py-2 rounded-lg border-2 bg-black text-white font-bold transition-colors duration-300 hover:bg-primary-green hover:text-white"
+              >
+                Homes Across Ontario
+              </Link>
+              <Link
+                href="/commercial-properties"
+                className="px-4 py-2 rounded-lg border-2 bg-black text-white font-bold transition-colors duration-300 hover:bg-primary-green hover:text-white"
+              >
+                Commercial Properties
+              </Link>
             </div>
           </div>
         </div>
