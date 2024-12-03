@@ -34,6 +34,38 @@ export const getSalesData = async (offset, limit, city, listingType) => {
   }
 };
 
+const getCommercialSalesData = async (offset, limit, city, listingType) => {
+  try {
+    let selectQuery = `${
+      city && `Municipality=${city || ""},`
+    }SaleLease='Sale'`;
+
+    const queriesArray = [
+      `$select=${selectQuery}`,
+      `$skip=${offset}`,
+      `$limit=${limit}`,
+    ];
+
+    const url = commercial.properties.replace(
+      "$query",
+      `?${queriesArray.join("&")}`
+    );
+    const options = {
+      method: "GET",
+    };
+
+    if (listingType) {
+      selectQuery += `,TypeOwnSrch=${listingType}`;
+    }
+    const res = await fetch(url, options);
+    const data = await res.json();
+    return data.results;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`An error happened in getSalesData: ${error}`);
+  }
+};
+
 // export const getFilteredRetsData = async (queryParams) => {
 //   try {
 //     //all the necessary queries possible

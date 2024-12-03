@@ -2,13 +2,18 @@ import React from "react";
 import dynamic from "next/dynamic";
 
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFIrstLetter";
-import { getSalesData } from "../../../api/getSalesData";
+import { getCommercialSalesData } from "@/api/getSalesData";
 import { ImSpinner } from "react-icons/im";
 import CommercialFiltersWithSalesList from "@/components/CommercialFiltersWithSalesList";
 
 const INITIAL_LIMIT = 30;
 const page = async ({ params }) => {
-  const salesListData = await getSalesData(0, INITIAL_LIMIT);
+  const salesListData = await getCommercialSalesData(
+    0,
+    INITIAL_LIMIT,
+    "Toronto",
+    "Restaurant"
+  );
   const saleLeaseVal = "lease";
   return (
     <>
