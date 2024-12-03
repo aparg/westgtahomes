@@ -1,5 +1,5 @@
 export const priceFormatter = (num) => {
-  const numStr = num.toString();
+  const numStr = num?.toString();
   const length = numStr.length;
   const decimalIndex = numStr.indexOf(".");
 

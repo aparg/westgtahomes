@@ -1,13 +1,18 @@
 import { generateURL } from "@/helpers/generateURL";
 import Link from "next/link";
 import React from "react";
+import Logo from "./Logo";
 
 const SeeListings = () => {
   return (
     <div className="w-full bg-gray-100 py-20 flex flex-col items-center mb-[20rem]">
       <div className="max-w-[90%]">
-        <h2 className="uppercase text-sm sm:text-md text-center text-gray-600">
-          westgtahomes real estate listings
+        <h2 className=" text-center">
+          <Logo />
+          <span className="uppercase text-sm sm:text-md text-gray-600">
+            {" "}
+            real estate listings
+          </span>
         </h2>
         <h1 className="text-2xl sm:text-4xl font-bold text-center">
           See listings available with us

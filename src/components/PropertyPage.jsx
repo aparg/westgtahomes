@@ -176,7 +176,7 @@ const PropertyPage = ({ main_data }) => {
                 <span>
                   Average price for {typeOwnSrchToName[main_data?.TypeOwnSrch]}{" "}
                   properties in {main_data.Municipality}: $
-                  {main_data.avg.toLocaleString()}
+                  {main_data.avg?.toLocaleString()}
                 </span>
               </button>
             </div>

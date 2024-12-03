@@ -17,8 +17,10 @@ import { saleLease, bedCount, houseType } from "@/constant";
 import ResaleCard from "./ResaleCard";
 import CreateSchema from "@/helpers/CreateSchema";
 import PageSelector from "./PageSelector";
+import CommercialCard from "./CommercialCard";
 
 const SalesList = ({
+  property,
   salesData,
   city,
   INITIAL_LIMIT,
@@ -104,7 +106,11 @@ const SalesList = ({
                     __html: JSON.stringify(CreateSchema(curElem)),
                   }}
                 />
-                <ResaleCard curElem={curElem} />
+                {property === "commercial" ? (
+                  <CommercialCard curElem={curElem} />
+                ) : (
+                  <ResaleCard curElem={curElem} />
+                )}
               </div>
             );
             // }

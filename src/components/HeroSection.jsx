@@ -90,7 +90,7 @@ const HeroSection = () => {
                 Homes Across Ontario
               </Link>
               <Link
-                href="/commercial-properties"
+                href="/commercial/ontario"
                 className="px-4 py-2 rounded-lg border-2 bg-black text-white font-bold transition-colors duration-300 hover:bg-primary-green hover:text-white"
               >
                 Commercial Properties

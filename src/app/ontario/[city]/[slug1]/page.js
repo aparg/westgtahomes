@@ -52,7 +52,7 @@ export async function generateMetadata({ params }, parent) {
   return {
     ...parent,
     alternates: {
-      canonical: `https://westgtahomes.ca/ontario/${type}/${
+      canonical: `https://https://westgtahomes.ca/commercial/ontario/${type}/${
         saleLeaseValue || type
       }`,
     },

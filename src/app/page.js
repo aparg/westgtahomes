@@ -55,15 +55,20 @@ export default async function Home() {
     "Hamilton"
   );
 
-  const GEORGETOWNHOMES = await getSalesData(
-    INITIAL_OFFSET,
-    INITIAL_LIMIT,
-    "Georgetown"
-  );
+  // const GEORGETOWNHOMES = await getSalesData(
+  //   INITIAL_OFFSET,
+  //   INITIAL_LIMIT,
+  //   "George town"
+  // );
   const VAUGHANHOMES = await getSalesData(
     INITIAL_OFFSET,
     INITIAL_LIMIT,
     "Vaughan"
+  );
+  const HALTONHILLSHOMES = await getSalesData(
+    INITIAL_OFFSET,
+    INITIAL_LIMIT,
+    "Halton Hills"
   );
 
   const MILTONHOMES = await getSalesData(
@@ -123,6 +128,20 @@ export default async function Home() {
       <MobilePromo></MobilePromo>
       <section className="mx-auto max-w-[90%]">
         <PropertyDisplaySection
+          title="Explore homes in Oakville"
+          subtitle=""
+          exploreAllLink={generateURL({ cityVal: "Oakville" })}
+        >
+          <Slider data={OAKVILLEHOMES} type="resale" />
+        </PropertyDisplaySection>
+        <PropertyDisplaySection
+          title="Explore homes in Burlington"
+          subtitle={""}
+          exploreAllLink={generateURL({ cityVal: "Toronto" })}
+        >
+          <Slider data={BURLINGTONHOMES} type="resale" />
+        </PropertyDisplaySection>
+        <PropertyDisplaySection
           title="Explore homes in Brampton"
           subtitle=""
           exploreAllLink={generateURL({ cityVal: "Brampton" })}
@@ -137,14 +156,6 @@ export default async function Home() {
           }
           data={HOUSEWITHFIREPLACES}
         /> */}
-
-        <PropertyDisplaySection
-          title="Explore homes in Mississauga"
-          subtitle=""
-          exploreAllLink={generateURL({ cityVal: "Mississauga" })}
-        >
-          <Slider data={MISSISAUGAHOMES} type="resale" />
-        </PropertyDisplaySection>
 
         {/* <PropertiesDisplayer
           topic={"Separate Entrance"}
@@ -194,19 +205,27 @@ export default async function Home() {
           }}
         />
         <PropertyDisplaySection
-          title="Explore homes in Oakville"
+          title="Explore homes in Hamilton"
           subtitle=""
-          exploreAllLink={generateURL({ cityVal: "Oakville" })}
+          exploreAllLink={generateURL({ cityVal: "Hamilton" })}
         >
-          <Slider data={OAKVILLEHOMES} type="resale" />
+          <Slider data={HAMILTONHOMES} type="resale" />
         </PropertyDisplaySection>
+        {/* <PropertyDisplaySection
+          title="Explore homes in Georgetown"
+          subtitle=""
+          exploreAllLink={generateURL({ cityVal: "Mississauga" })}
+        >
+          <Slider data={GEORGETOWNHOMES} type="resale" />
+        </PropertyDisplaySection> */}
         <PropertyDisplaySection
-          title="Explore homes in Burlington"
-          subtitle={""}
-          exploreAllLink={generateURL({ cityVal: "Toronto" })}
+          title="Explore homes in Halton Hills"
+          subtitle=""
+          exploreAllLink={generateURL({ cityVal: "Halton Hills" })}
         >
-          <Slider data={BURLINGTONHOMES} type="resale" />
+          <Slider data={HALTONHILLSHOMES} type="resale" />
         </PropertyDisplaySection>
+
         <PropertyDisplaySection title="Follow us on Instagram">
           <InstagramPosts />
         </PropertyDisplaySection>

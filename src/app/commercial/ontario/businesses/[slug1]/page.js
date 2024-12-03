@@ -1,7 +1,7 @@
 import React from "react";
-import { houseType, saleLease } from "@/constant";
+import { houseType, saleLease } from "@/commercial-constant";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFIrstLetter";
-import FiltersWithSalesList from "@/components/FiltersWithSalesList";
+import CommercialFiltersWithSalesList from "@/components/CommercialFiltersWithSalesList";
 import CanadianCitiesShowcase from "@/components/CanadianCitiesShowcase";
 
 const page = async ({ params }) => {
@@ -27,10 +27,10 @@ const page = async ({ params }) => {
   if (isValidSlug)
     return (
       <div className="">
-        <FiltersWithSalesList
+        <CommercialFiltersWithSalesList
           {...{
             INITIAL_LIMIT,
-            saleLeaseVal: saleLeaseValue,
+            saleLeaseVal: saleLeaseValue || Object.keys(saleLease)[0],
             requiredType: type,
             filter: type || "",
           }}
@@ -56,13 +56,13 @@ export async function generateMetadata({ params }, parent) {
   return {
     ...parent,
     alternates: {
-      canonical: `https://https://westgtahomes.ca/commercial/ontario/homes/${params.slug1}`,
+      canonical: `https://https://westgtahomes.ca/commercial/ontario/businesses/${params.slug1}`,
     },
     openGraph: {
       images: "/favicon.ico",
     },
-    title: `100+ Ontario homes for Sale | New Listings | westgtahomes.ca `,
-    description: `500+ Ontario ${type} for sale. Book a showing for affordable homes with pools, finished basements, walkouts. Prices from $1 to $5,000,000. Open houses available.`,
+    title: `100+ Ontario properties for Sale | New Listings | WestGTAHomes.ca `,
+    description: `500+ Ontario ${type} for sale. Book a showing for gas stations, restaurants, motels, convenience stores and lands. Open houses available.`,
   };
 }
 

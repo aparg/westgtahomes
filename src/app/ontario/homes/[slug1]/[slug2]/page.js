@@ -64,7 +64,7 @@ export async function generateMetadata({ params }, parent) {
   return {
     ...parent,
     alternates: {
-      canonical: `https://westgtahomes.ca/ontario/${params.slug1}/${params.slug2}`,
+      canonical: `https://https://westgtahomes.ca/commercial/ontario/${params.slug1}/${params.slug2}`,
     },
     openGraph: {
       images: "/favicon.ico",

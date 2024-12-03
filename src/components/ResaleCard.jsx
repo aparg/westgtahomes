@@ -110,7 +110,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
         <div className="h-full w-full">
           <div className="flex flex-col">
             {/* Image Container */}
-            <div className="relative h-48 sm:h-64">
+            <div className="relative h-56 sm:h-64">
               <img
                 className="object-cover w-full h-full"
                 src={imgSrc}
@@ -122,11 +122,11 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
 
               {/* Property Tags */}
               <div className="absolute top-3 left-3 flex gap-2">
-                <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-medium">
+                <span className="bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium">
                   {curElem.TypeOwn1Out}
                 </span>
                 {curElem.ApproxSquareFootage && (
-                  <span className="bg-gray-800/80 text-white px-3 py-1 rounded-full text-xs font-medium hidden sm:block">
+                  <span className="bg-gray-800/80 text-white px-2 py-1 rounded-full text-xs font-medium hidden sm:block">
                     {curElem.ApproxSquareFootage} Sq.Ft.
                   </span>
                 )}
@@ -134,30 +134,30 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
             </div>
 
             {/* Content Container */}
-            <div className="p-4">
+            <div className="p-3 sm:p-4">
               {/* Price and Timestamp */}
-              <div className="flex justify-between items-center mb-3">
-                <h2 className="text-2xl font-bold text-gray-900">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 sm:mb-3 gap-1">
+                <h2 className="text-lg sm:text-2xl font-bold text-gray-900">
                   {price}
                   {curElem.SaleLease === saleLease.lease.value && (
                     <span className="text-gray-600 text-sm"> /month</span>
                   )}
                 </h2>
-                <span className="text-xs text-gray-500">
+                <span className="text-[10px] sm:text-xs text-gray-500">
                   <TimeAgo modificationTimestamp={curElem.TimestampSql} />
                 </span>
               </div>
 
               {/* Property Features */}
-              <div className="flex gap-4 mb-3">
+              <div className="flex flex-wrap gap-2 sm:gap-4 mb-2 sm:mb-3">
                 {curElem.Bedrooms && (
                   <div className="flex items-center text-gray-700">
                     <img
                       src="/resale-card-img/bedrooms.svg"
-                      className={`${small ? "w-3 h-3" : "w-4 h-4"} mr-1`}
+                      className="w-3 h-3 sm:w-4 sm:h-4 mr-1"
                       alt="bedrooms"
                     />
-                    <span className={small ? "text-xs" : "text-sm"}>
+                    <span className="text-xs sm:text-sm whitespace-nowrap">
                       {Math.floor(curElem.Bedrooms)} Beds
                     </span>
                   </div>
@@ -166,10 +166,10 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
                   <div className="flex items-center text-gray-700">
                     <img
                       src="/resale-card-img/bathrooms.svg"
-                      className={`${small ? "w-3 h-3" : "w-4 h-4"} mr-1`}
+                      className="w-3 h-3 sm:w-4 sm:h-4 mr-1"
                       alt="washrooms"
                     />
-                    <span className={small ? "text-xs" : "text-sm"}>
+                    <span className="text-xs sm:text-sm whitespace-nowrap">
                       {Math.floor(curElem.Washrooms)} Baths
                     </span>
                   </div>
@@ -181,7 +181,11 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
                       className={`${small ? "w-3 h-3" : "w-4 h-4"} mr-1`}
                       alt="garage"
                     />
-                    <span className={small ? "text-xs" : "text-sm"}>
+                    <span
+                      className={`${
+                        small ? "text-xs" : "text-sm"
+                      } whitespace-nowrap`}
+                    >
                       {Math.floor(curElem.GarageSpaces)} Garage
                     </span>
                   </div>

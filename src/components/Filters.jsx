@@ -224,7 +224,7 @@ const Filters = ({ filterState, setFilterState, fetchFilteredData }) => {
           )}
         </div>
 
-        <div className="rounded-full overflow-hidden sm:mr-4 hover:shadow-lg">
+        <div className="rounded-full sm:mr-4 hover:shadow-lg">
           <IndividualFilter
             options={houseTypeOptions}
             defaultValue={
@@ -370,12 +370,12 @@ const CustomDropdown = ({
         className={`
           flex items-center justify-between
           capitalize text-xs sm:text-sm h-[28px] sm:h-[34px] 
-          rounded-full px-3 border
+          rounded-md px-3 border
           ${isMobileView ? "px-1 gap-1 min-w-[40px]" : "min-w-[120px]"}
           ${
             selectedValues[0] !== defaultValue
               ? `bg-primary-green text-white border-primary-green`
-              : "border-gray-300 bg-white "
+              : "border-gray-300 bg-white"
           }
           hover:shadow-md transition-all text-center
         `}
@@ -583,7 +583,7 @@ const MoreFilter = ({
       <Button
         onPress={onOpen}
         variant="faded"
-        className="capitalize px-1 min-w-10 sm:px-3 py-1 text-xs sm:text-sm h-[28px] sm:h-[34px]  bg-white rounded-full hover:shadow-md"
+        className="capitalize px-1 min-w-10 sm:px-3 py-1 text-xs sm:text-sm h-[28px] sm:h-[34px] bg-white rounded-md hover:shadow-md"
         size="md"
       >
         More Filter
@@ -893,7 +893,7 @@ const IndividualFilterButtonNoLink = ({
         return (
           <div
             key={index}
-            className={`mx-[2px] px-2 sm:px-3  sm:h-[34px] py-1 cursor-pointer text-nowrap flex justify-content-center align-items-center rounded-full hover:shadow-lg text-xs sm:text-sm
+            className={`mx-[2px] px-2 sm:px-3 sm:h-[34px] py-1 cursor-pointer text-nowrap flex justify-content-center align-items-center rounded-md hover:shadow-lg text-xs sm:text-sm
             ${
               activeFilter == option
                 ? `border-primary-green bg-primary-green text-white`
@@ -941,9 +941,9 @@ const IndividualFilterNoOptions = ({
 const IndividualFilterWithCancel = ({ name, value, handleFilterChange }) => {
   return (
     <Chip
-      className="h-[34px] roundedPill"
+      className="h-[34px] rounded-md"
       onClose={value ? () => handleFilterChange(name, false) : undefined}
-      radius="md"
+      radius="sm"
       variant={value ? "solid" : "bordered"}
       onClick={() => handleFilterChange(name, !value)}
       classNames={{

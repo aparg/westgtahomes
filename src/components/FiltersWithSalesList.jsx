@@ -205,7 +205,7 @@ const FiltersWithSalesList = ({
           {[
             capitalizeFirstLetter(requiredType),
             homeText,
-            "for " + capitalizeFirstLetter(saleLeaseVal) || "Sale",
+            "for " + `${capitalizeFirstLetter(saleLeaseVal) || "Sale"}`,
           ].join(" ") + " "}{" "}
           {city ? ` | ${capitalizeFirstLetter(city) || "Sale"}` : ""} |
           Westgtahomes.ca
