@@ -3,8 +3,8 @@ import { capitalizeFirstLetter } from "@/helpers/capitalizeFIrstLetter";
 import { Resend } from "resend";
 import swal from "sweetalert";
 
-// const resend = new Resend("re_EwHkJKn7_BqC3Jj57KVoFXeELa5b74Qhd");
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend("re_V3hTzKJu_M7wNAb6QFs2yZbYywy3DnfqW");
+// const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendEmail = async ({ content, page = null, title = null }) => {
   const contentArray = [];
