@@ -14,7 +14,8 @@ export const sendEmail = async ({ content, page = null, title = null }) => {
   console.log("sending...");
   const { data, error } = await resend.emails.send({
     from: "westgtahomes <info@westgtahomes.ca>",
-    to: ["samvalji.homebaba@gmail.com", "vishaldhakal96@gmail.com"],
+    // to: ["samvalji.homebaba@gmail.com", "vishaldhakal96@gmail.com"],
+    to: ["apargtm@gmail.com"],
     subject: `Inquiry from ${page || "property"} - westgtahomes.ca`,
     html: `<h1>${
       title || `Inquiry from ${page} page`

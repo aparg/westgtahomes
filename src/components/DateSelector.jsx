@@ -5,23 +5,25 @@ import BookingDateOption from "./BookingDateOption";
 import TimingList from "./TimingList";
 import { sendEmail } from "@/api/resend";
 
-const DateSelector = ({ showBookingType = true, address }) => {
+const DateSelector = ({ showBookingType = true, address, id = null }) => {
   // const [scrollPosition, setScrollPosition] = useState(0);
   // const [maxScroll, setMaxScroll] = useState(0);
   const cardRef = useRef(null);
-
+  const initialTimingState = {
+    type: "",
+    date: "",
+    time: "",
+    phoneNumber: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+  };
   //slide right and left code for cardref and containerref
   const containerRef = useRef(null);
   const scrollRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [phone, setPhone] = useState("");
-  const [timing, setTiming] = useState({
-    type: "",
-    date: "",
-    time: "",
-    phoneNumber: "",
-    name: "",
-  });
+  const [timing, setTiming] = useState(initialTimingState);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -104,17 +106,27 @@ const DateSelector = ({ showBookingType = true, address }) => {
 
   const handleChange = (e) => {
     const { id, value } = e.currentTarget;
+    // console.log([id.split("-")[0]], value);
+    isSubmitted && setIsSubmitted(false);
     setTiming((prevState) => ({
       ...prevState,
-      [id]: value,
+      [id.split("-")[0]]: value,
     }));
   };
 
   const submitData = async () => {
     setIsSubmitting(true);
     try {
+      const emailContent = {
+        "First Name": timing.firstName,
+        "Last Name": timing.lastName,
+        "Phone Number": timing.phoneNumber,
+        Time: timing.time,
+        Date: timing.date,
+        "Booking Type": timing.type,
+      };
       await sendEmail({
-        content: timing,
+        content: emailContent,
         page: address,
         title: `Inquiry for property ${address}`,
       });
@@ -123,6 +135,7 @@ const DateSelector = ({ showBookingType = true, address }) => {
       console.error("Failed to send email:", error);
     } finally {
       setIsSubmitting(false);
+      setTiming(initialTimingState);
     }
   };
   return (
@@ -180,27 +193,65 @@ const DateSelector = ({ showBookingType = true, address }) => {
         <div className="relative mb-1 mt-4 w-full">
           <input
             type="text"
-            name="name"
-            id="name"
+            name="firstName"
+            id={`firstName-${id}`}
             placeholder=""
-            value={timing.name}
+            value={timing.firstName}
             onChange={(e) => handleChange(e)}
             required={true}
             className="rounded-full bg-white mt-4 fff w-full px-4 pt-5 pb-1 border-b-2 focus:outline-none peer/bookshowingName placeholder:translate-y-1/2 placeholder:scale-100"
           />
           <label
-            htmlFor="name"
+            htmlFor={`firstName-${id}`}
             className="absolute left-0 top-5 px-4 text-gray-500 transition-all duration-300 peer-focus/bookshowingName:-translate-y-[0.85] peer-focus/bookshowingName:scale-30 peer-placeholder-shown/bookshowingName:translate-y-1/4 peer-placeholder-shown/bookshowingName:scale-100"
           >
-            Name
+            First Name
           </label>
         </div>
+        <div className="relative mt-1 w-full">
+          <input
+            type="text"
+            name="lastName"
+            id={`lastName-${id}`}
+            placeholder=""
+            value={timing.lastName}
+            onChange={(e) => handleChange(e)}
+            required={false}
+            className="rounded-full bg-white mt-4 fff w-full px-4 pt-5 pb-1 border-b-2 focus:outline-none peer/bookshowingName placeholder:translate-y-1/2 placeholder:scale-100"
+          />
+          <label
+            htmlFor={`lastName-${id}`}
+            className="absolute left-0 top-5 px-4 text-gray-500 transition-all duration-300 peer-focus/bookshowingName:-translate-y-[0.85] peer-focus/bookshowingName:scale-30 peer-placeholder-shown/bookshowingName:translate-y-1/4 peer-placeholder-shown/bookshowingName:scale-100"
+          >
+            Last Name
+          </label>
+        </div>
+        <div className="relative mt-1 w-full">
+          <input
+            type="email"
+            name="email"
+            id={`email-${id}`}
+            placeholder=""
+            value={timing.email}
+            aria-autocomplete="inline"
+            onChange={(e) => handleChange(e)}
+            required={false}
+            className="rounded-full bg-white mt-4 fff w-full px-4 pt-5 pb-1 border-b-2 focus:outline-none peer/bookshowingName placeholder:translate-y-1/2 placeholder:scale-100"
+          />
+          <label
+            htmlFor={`email-${id}`}
+            className="absolute left-0 top-5 px-4 text-gray-500 transition-all duration-300 peer-focus/bookshowingName:-translate-y-[0.85] peer-focus/bookshowingName:scale-30 peer-placeholder-shown/bookshowingName:translate-y-1/4 peer-placeholder-shown/bookshowingName:scale-100"
+          >
+            Email
+          </label>
+        </div>
+
         <div className="relative mb-3 w-full">
           <input
             type="text"
             inputMode="numeric"
             name="phone"
-            id="phoneNumber"
+            id={`phoneNumber-${id}`}
             placeholder=""
             value={timing.phoneNumber}
             onChange={(e) => handleChange(e)}
@@ -208,7 +259,7 @@ const DateSelector = ({ showBookingType = true, address }) => {
             className="rounded-full bg-white mt-4 fff w-full px-4 pt-5 pb-1 border-b-2 focus:outline-none peer/bookshowingPhone placeholder:translate-y-1/2 placeholder:scale-100 "
           />
           <label
-            htmlFor="phoneNumber"
+            htmlFor={`phoneNumber-${id}`}
             className="absolute left-0 top-5 px-4 text-gray-500 transition-all duration-300 peer-focus/bookshowingPhone:-translate-y-[0.85] peer-focus/bookshowingPhone:scale-30 peer-placeholder-shown/bookshowingPhone:translate-y-1/4 peer-placeholder-shown/bookshowingPhone:scale-100"
           >
             Phone
