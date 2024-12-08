@@ -120,7 +120,8 @@ const DateSelector = ({ showBookingType = true, address, id = null }) => {
       const emailContent = {
         "First Name": timing.firstName,
         "Last Name": timing.lastName,
-        "Phone Number": timing.phoneNumber,
+        Email: timing.email,
+        Phone: timing.phoneNumber,
         Time: timing.time,
         Date: timing.date,
         "Booking Type": timing.type,
