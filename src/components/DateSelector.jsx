@@ -4,6 +4,7 @@ import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import BookingDateOption from "./BookingDateOption";
 import TimingList from "./TimingList";
 import { sendEmail } from "@/api/resend";
+import { usePathname } from "next/navigation";
 
 const DateSelector = ({ showBookingType = true, address, id = null }) => {
   // const [scrollPosition, setScrollPosition] = useState(0);
@@ -18,6 +19,7 @@ const DateSelector = ({ showBookingType = true, address, id = null }) => {
     lastName: "",
     email: "",
   };
+  const pathname = usePathname();
   //slide right and left code for cardref and containerref
   const containerRef = useRef(null);
   const scrollRef = useRef(null);
@@ -125,6 +127,7 @@ const DateSelector = ({ showBookingType = true, address, id = null }) => {
         Time: timing.time,
         Date: timing.date,
         "Booking Type": timing.type,
+        Page: `https://westgtahomes.ca${pathname}`,
       };
       await sendEmail({
         content: emailContent,
