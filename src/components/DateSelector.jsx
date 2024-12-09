@@ -127,7 +127,7 @@ const DateSelector = ({ showBookingType = true, address, id = null }) => {
         Time: timing.time,
         Date: timing.date,
         "Booking Type": timing.type,
-        Page: `https://westgtahomes.ca${pathname}`,
+        Notes: `Lead coming from: https://westgtahomes.ca${pathname}`,
       };
       await sendEmail({
         content: emailContent,
