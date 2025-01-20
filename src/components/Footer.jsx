@@ -145,11 +145,11 @@ const Footer = ({ cities }) => {
                   </Link>
                 </div>
                 <p className="text-sm leading-relaxed mb-8">
-                  westgtahomes (“westgtahomes.ca”) is a real estate marketplace
-                  platform owned by Sam Valji. westgtahomes refers potential
-                  buyers to real estate agents that are licensed in the province
-                  where the respective property is located. New Home Inc is
-                  licensed as a real estate brokerage in Ontario.
+                  WestGTAHomes ("westgtahomes.ca") is an MLS listing platform
+                  managed by Sam Valji, an active member of the Toronto Regional
+                  Real Estate Board (TRREB) and a registered real estate
+                  salesperson with New Home Inc. Brokerage. All listings are
+                  provided courtesy of TRREB.
                   <br />
                   <br />
                   IDX information is provided exclusively for consumers’
