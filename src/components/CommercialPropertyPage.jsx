@@ -67,7 +67,7 @@ const CommercialPropertyPage = ({ main_data }) => {
     }
   };
 
-  const dashedStreetName = `${main_data.Street}-${main_data.StreetName}-${main_data.StreetAbbreviation}`;
+  const dashedStreetName = `${main_data.StreetNumber}-${main_data.StreetName}-${main_data.StreetSuffix}`;
 
   const price = formatCurrency(main_data?.ListPrice);
   const TaxAnnualAmount = formatCurrency(main_data?.Taxes);
@@ -127,10 +127,12 @@ const CommercialPropertyPage = ({ main_data }) => {
 
               <div className="space-x-2 block sm:hidden">
                 <button className="bg-[#CC0B0B] p-1 text-white text-xs font-bold mt-1 sm:my-0 w-fit-content rounded-md">
-                  <TimeAgo modificationTimestamp={main_data.TimestampSql} />
+                  <TimeAgo
+                    modificationTimestamp={main_data.OriginalEntryTimestamp}
+                  />
                 </button>
                 <button className="bg-[#CC0B0B] p-1 text-white text-xs font-bold mt-1 sm:my-0 w-fit-content rounded-md">
-                  <span>{main_data.TypeOwn1Out}</span>
+                  <span>{main_data.PropertySubType}</span>
                 </button>
               </div>
               {/* <div className="flex items-center">
@@ -152,15 +154,15 @@ const CommercialPropertyPage = ({ main_data }) => {
                       </div> */}
             </div>
             <h1 className="fs-6 mt-0 mb-1 text-lg">
-              {main_data.Street} {main_data.StreetName}{" "}
-              {main_data.StreetAbbreviation}, {main_data.Municipality},{" "}
-              {main_data.Province}, {main_data.PostalCode}
+              {main_data.StreetNumber} {main_data.StreetName}{" "}
+              {main_data.StreetSuffix}, {main_data?.City}, {main_data.Province},{" "}
+              {main_data.PostalCode}
             </h1>
             {/* <div>
               <button className="bg-gray-200 mt-4 sm:py-1 px-2 text-black sm:text-xs font-semibold mb-1 w-fit-content rounded-md text-left py-[0.5px] text-[0.65rem]">
                 <span>
-                  Average price for {typeOwnSrchToName[main_data?.TypeOwnSrch]}{" "}
-                  properties in {main_data.Municipality}: $
+                  Average price for {typeOwnSrchToName[main_data?.ProeprtySubType]}{" "}
+                  properties in {main_data?.City}: $
                   {main_data.avg.toLocaleString()}
                 </span>
               </button>
@@ -203,13 +205,13 @@ const CommercialPropertyPage = ({ main_data }) => {
             </p>
             <h1 className="vmain-title">
               <div className="uppercase bannerSection text-lg">
-                FOR {main_data.SaleLease}
+                FOR {main_data?.TransactionType}
               </div>
             </h1>
             {/* <CompareButton main_data={main_data} width={8} /> */}
             {/* <div className="flex flex-col font-md mt-2 text-lg">
                 <p class className="">
-                  {main_data.Municipality}, {main_data.Province},{" "}
+                  {main_data?.City}, {main_data.Province},{" "}
                   {main_data.PostalCode}
                 </p>
               </div> */}
@@ -222,8 +224,8 @@ const CommercialPropertyPage = ({ main_data }) => {
             <h2 className="font-extrabold text-2xl sm:text-4xl">
               Property Description <br />
               <h2 className="font-normal text-lg sm:text-2xl sm:mt-2 mb-1 sm:mb-3">
-                {main_data.Street} {main_data.StreetName}{" "}
-                {main_data.StreetAbbreviation}, {main_data.Municipality},{" "}
+                {main_data.StreetNumber} {main_data.StreetName}{" "}
+                {main_data.StreetSuffix}, {main_data?.City},{" "}
                 {main_data.Province}
               </h2>
             </h2>
@@ -257,7 +259,7 @@ const CommercialPropertyPage = ({ main_data }) => {
               </div>
               <div className="col-5 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pl-0">
                 <p className="cardd-subtitle_bg-black">
-                  <TimeAgo modificationTimestamp={main_data.TimestampSql} />
+                  <TimeAgo modificationTimestamp={main_data.OriginalEntryTimestamp} />
                 </p>
               </div>
               <div className="col-7 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pr-0">
@@ -267,7 +269,7 @@ const CommercialPropertyPage = ({ main_data }) => {
               </div>
               <div className="col-5 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pl-0">
                 <p className="cardd-subtitle_bg-black">
-                  {main_data.TypeOwn1Out}
+                  {main_data.PropertySubType}
                 </p>
               </div>
             </div> */}
@@ -281,7 +283,7 @@ const CommercialPropertyPage = ({ main_data }) => {
                 <p className="font-bold text-black">Property type</p>
               </div>
               <div className="col-span-1 md:col-span-1 border-b border-gray-200 py-2 md:py-3 pl-0">
-                <p className="text-black">{main_data.TypeOwn1Out}</p>
+                <p className="text-black">{main_data.PropertySubType}</p>
               </div>
               <div className="col-7 col-md border-b-[0.1px] border-gray-200 border-sm py-2 md:py-3 pr-0">
                 <p className="cardd-subtitle_bg-black font-bold">Lot size</p>
@@ -310,7 +312,7 @@ const CommercialPropertyPage = ({ main_data }) => {
               </div>
               <div className="col-5 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pl-0">
                 <p className="cardd-subtitle_bg-black">
-                  {main_data.ApproxSquareFootage} Sqft
+                  {main_data.BuildingAreaTotal} Sqft
                 </p>
               </div>
             </div>
@@ -395,7 +397,9 @@ const CommercialPropertyPage = ({ main_data }) => {
               </div>
               <div className="col-span-1 md:col-span-1 border-b border-gray-200 py-2 md:py-3 pl-0">
                 <p className="text-black">
-                  <TimeAgo modificationTimestamp={main_data.TimestampSql} />
+                  <TimeAgo
+                    modificationTimestamp={main_data.OriginalEntryTimestamp}
+                  />
                 </p>
               </div>
 
@@ -438,7 +442,7 @@ const CommercialPropertyPage = ({ main_data }) => {
               </div>
               <div className="col-5 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pl-0">
                 <p className="cardd-subtitle_bg-black">
-                  {main_data.ApproxSquareFootage}
+                  {main_data.BuildingAreaTotal}
                 </p>
               </div>
             </div>
@@ -585,21 +589,6 @@ const CommercialPropertyPage = ({ main_data }) => {
                   isMobileView ? "flex-wrap" : "flex-nowrap "
                 }`}
               >
-                <div className="col-7 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pr-0">
-                  <p className="cardd-subtitle_bg-black font-bold">
-                    Construction materials
-                  </p>
-                </div>
-                <div className="col-5 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pl-0">
-                  <p className="cardd-subtitle_bg-black">
-                    {main_data.Exterior1}
-                  </p>
-                </div>
-                <div className="col-7 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pr-0">
-                  <p className="cardd-subtitle_bg-black font-bold">
-                    Other structures
-                  </p>
-                </div>
                 <div className="col-5 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pl-0">
                   <p className="cardd-subtitle_bg-black">
                     {main_data.OtherStructures1}
@@ -732,67 +721,6 @@ const CommercialPropertyPage = ({ main_data }) => {
               </div>
 
               {/* Location */}
-              <h5 className="py-2 font-bold pt-5">Location</h5>
-              <div
-                className={`grid grid-cols-2  md:grid-cols-4 w-100 ${
-                  isMobileView ? "flex-wrap" : "flex-nowrap "
-                }`}
-              >
-                <div className="col-7 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pr-0">
-                  <p className="cardd-subtitle_bg-black font-bold">
-                    Water source
-                  </p>
-                </div>
-                <div className="col-5 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pl-0">
-                  <p className="cardd-subtitle_bg-black">{main_data.Water}</p>
-                </div>
-                <div className="col-7 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pr-0">
-                  <p className="cardd-subtitle_bg-black font-bold">Area</p>
-                </div>
-                <div className="col-5 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pl-0">
-                  <p className="cardd-subtitle_bg-black">{main_data.Area}</p>
-                </div>
-              </div>
-              <div
-                className={`grid grid-cols-2  md:grid-cols-4 w-100 ${
-                  isMobileView ? "flex-wrap" : "flex-nowrap "
-                }`}
-              >
-                <div className="col-7 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pr-0">
-                  <p className="cardd-subtitle_bg-black font-bold">Community</p>
-                </div>
-                <div className="col-5 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pl-0">
-                  <p className="cardd-subtitle_bg-black">
-                    {main_data.Community}
-                  </p>
-                </div>
-                <div className="col-7 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pr-0">
-                  <p className="cardd-subtitle_bg-black font-bold">
-                    Community features
-                  </p>
-                </div>
-                <div className="col-5 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pl-0">
-                  <p className="cardd-subtitle_bg-black">
-                    {getCommunityFeatures()}
-                  </p>
-                </div>
-              </div>
-              <div
-                className={`grid grid-cols-2  md:grid-cols-4 w-100 ${
-                  isMobileView ? "flex-wrap" : "flex-nowrap "
-                }`}
-              >
-                <div className="col-7 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pr-0">
-                  <p className="cardd-subtitle_bg-black font-bold">
-                    Directions
-                  </p>
-                </div>
-                <div className="col-5 col-md border-b-[0.1px] border-gray-200 py-2 md:py-3 pl-0">
-                  <p className="cardd-subtitle_bg-black">
-                    {main_data.DirectionsCrossStreets}
-                  </p>
-                </div>
-              </div>
             </div>
             {/* see more */}
 
@@ -830,8 +758,8 @@ const CommercialPropertyPage = ({ main_data }) => {
             className="w-8 sm:w-10 inline mr-2"
             src="/property-page-img/walking.svg"
           />
-          Walk Score for {main_data.Street} {main_data.StreetName}{" "}
-          {main_data.StreetAbbreviation}
+          Walk Score for {main_data.StreetNumber} {main_data.StreetName}{" "}
+          {main_data.StreetSuffix}
         </h2>
 
         <div className="">
@@ -844,7 +772,7 @@ const CommercialPropertyPage = ({ main_data }) => {
                 title="Walk Score"
                 className="ham p-0"
                 width="100%"
-                src={`https://www.walkscore.com/serve-walkscore-tile.php?wsid=&amp&s=${dashedStreetName},${main_data.Municipality}&amp;o=h&amp;c=f&amp;h=500&amp;fh=0&amp;w=737`}
+                src={`https://www.walkscore.com/serve-walkscore-tile.php?wsid=&amp&s=${dashedStreetName},${main_data?.City}&amp;o=h&amp;c=f&amp;h=500&amp;fh=0&amp;w=737`}
               ></iframe>
               {/* </div> */}
               <script

@@ -98,7 +98,7 @@ const CommercialFiltersWithSalesList = ({
       const hotSales = [];
       const remainingSales = [];
       salesData?.forEach((data) => {
-        if (is24HoursAgo(data.TimestampSql) && hotSales.length < 5) {
+        if (is24HoursAgo(data.OriginalEntryTimestamp) && hotSales.length < 5) {
           hotSales.push(data);
         } else {
           remainingSales.push(data);

@@ -203,9 +203,13 @@ export const priceRangesLeaseProperties = {
 export const houseType = {
   all: { name: "House Type", value: null },
   // condo: { name: "Condo", value: "CondoProperty" },
-  semi: { name: "Semi Detached", value: ".S.", slug: "semi-detached-homes" },
-  detached: { name: "Detached", value: ".D.", slug: "detached-homes" },
-  town: { name: "Town House", value: ".A.", slug: "town-house" },
-  duplex: { name: "Duplex", value: ".J.", slug: "duplex-homes" },
-  triplex: { name: "Triplex", value: ".K.", slug: "triplex-homes" },
+  semi: {
+    name: "Semi Detached",
+    value: "Semi-Detached ",
+    slug: "semi-detached-homes",
+  },
+  detached: { name: "Detached", value: "Detached", slug: "detached-homes" },
+  town: { name: "Town House", value: "Att/Row/Townhouse", slug: "town-house" },
+  duplex: { name: "Duplex", value: "Duplex", slug: "duplex-homes" },
+  triplex: { name: "Triplex", value: "Triplex", slug: "triplex-homes" },
 };

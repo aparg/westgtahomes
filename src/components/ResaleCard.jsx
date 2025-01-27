@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import TimeAgo from "@/helpers/TimeAgo";
+import TimeAgo from "./TimeAgo";
 import { residential } from "../api/routes/fetchRoutes";
 import { houseType, saleLease } from "@/constant";
 import { generateURL } from "@/helpers/generateURL";
@@ -12,15 +12,35 @@ import Image from "next/image";
 import Favorite from "./Favorite";
 import { toggle } from "@nextui-org/react";
 import { isLocalStorageAvailable } from "@/helpers/checkLocalStorageAvailable";
+import { getImageUrls } from "@/api/getSalesData";
 
 const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
   // const [address, setAddress] = useState("");
+  const [imgUrl, setImgUrl] = useState(null);
 
   const price = Number(curElem.ListPrice).toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
     maximumFractionDigits: 0,
   });
+
+  useEffect(() => {
+    if (
+      window.localStorage.getItem("favorites") &&
+      JSON.parse(window.localStorage.getItem("favorites")).includes(
+        curElem.ListingKey
+      )
+    ) {
+      setIsFavorite(true);
+    }
+    // setLoadingImage(true);
+    getImageUrls({ MLS: curElem.ListingKey, thumbnailOnly: true }).then(
+      (urls) => {
+        setImgUrl(urls[0]);
+        // setLoadingImage(false);
+      }
+    );
+  }, []);
 
   const mapObj = {
     MLS: curElem.MLS,
@@ -36,16 +56,16 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
   };
 
   // const streetAndMLS = curElem.StreetName
-  //   ? `${curElem.Street}-${curElem.StreetName?.replace(" ", "-")}-${
-  //       curElem.StreetAbbreviation
+  //   ? `${curElem.StreetNumber}-${curElem.StreetName?.replace(" ", "-")}-${
+  //       curElem.StreetSuffix
   //     }-${curElem.MLS}`
   //   : curElem.MLS;
 
   const streetAndMLS = (() => {
     const parts = [];
 
-    if (curElem.Street) {
-      parts.push(curElem.Street);
+    if (curElem.StreetNumber) {
+      parts.push(curElem.StreetNumber.replace("/", "-"));
     }
 
     if (curElem.StreetName) {
@@ -53,14 +73,13 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
       parts.push(streetName);
     }
 
-    if (curElem.StreetAbbreviation) {
-      parts.push(curElem.StreetAbbreviation);
+    if (curElem.StreetSuffix) {
+      parts.push(curElem.StreetSuffix);
     }
 
-    if (curElem.MLS) {
-      parts.push(curElem.MLS);
+    if (curElem.ListingKey) {
+      parts.push(curElem.ListingKey);
     }
-
     return parts.filter(Boolean).join("-");
   })();
 
@@ -74,35 +93,12 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
       setIsFavorite(true);
     }
   });
-  const toggleFavorite = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    const favoriteValue = window.localStorage.getItem("favorites");
-    if (!isFavorite && isLocalStorageAvailable()) {
-      const favorites = favoriteValue
-        ? JSON.parse(window.localStorage.getItem("favorites"))
-        : [];
-      favorites.push(curElem.MLS);
-      const value = JSON.stringify(favorites);
-      window.localStorage.setItem("favorites", value);
-    } else if (isFavorite && isLocalStorageAvailable()) {
-      const favorites = favoriteValue
-        ? JSON.parse(window.localStorage.getItem("favorites"))
-        : [];
-      const value = JSON.stringify(
-        favorites.filter((val) => val !== curElem.MLS)
-      );
-      window.localStorage.setItem("favorites", value);
-    }
-
-    setIsFavorite(!isFavorite);
-  };
 
   return (
     <section className="relative bg-white border border-gray-200 hover:border-primary-green hover:shadow-lg rounded-lg transition-all duration-300 overflow-hidden">
       <Link
         href={generateURL({
-          cityVal: curElem.Municipality,
+          cityVal: curElem.City,
           listingIDVal: streetAndMLS,
         })}
         className="text-black"
@@ -113,7 +109,7 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
             <div className="relative h-56 sm:h-64">
               <img
                 className="object-cover w-full h-full"
-                src={imgSrc}
+                src={imgUrl}
                 width="900"
                 height="800"
                 alt="property image"
@@ -123,11 +119,11 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
               {/* Property Tags */}
               <div className="absolute top-3 left-3 flex gap-2">
                 <span className="bg-primary-green text-white px-2 py-1 rounded-full text-xs font-medium">
-                  {curElem.TypeOwn1Out}
+                  {curElem.PropertySubType}
                 </span>
-                {curElem.ApproxSquareFootage && (
+                {curElem.BuildingAreaTotal && (
                   <span className="bg-gray-800/80 text-white px-2 py-1 rounded-full text-xs font-medium hidden sm:block">
-                    {curElem.ApproxSquareFootage} Sq.Ft.
+                    {curElem.BuildingAreaTotal} Sq.Ft.
                   </span>
                 )}
               </div>
@@ -139,12 +135,14 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-2 sm:mb-3 gap-1">
                 <h2 className="text-lg sm:text-2xl font-bold text-gray-900">
                   {price}
-                  {curElem.SaleLease === saleLease.lease.value && (
+                  {curElem.TransactionType === saleLease.lease.name && (
                     <span className="text-gray-600 text-sm"> /month</span>
                   )}
                 </h2>
                 <span className="text-[10px] sm:text-xs text-gray-500">
-                  <TimeAgo modificationTimestamp={curElem.TimestampSql} />
+                  <TimeAgo
+                    modificationTimestamp={curElem.OriginalEntryTimestamp}
+                  />
                 </span>
               </div>
 
@@ -174,24 +172,26 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
                     </span>
                   </div>
                 )}
-                {curElem.GarageSpaces && (
-                  <div className="flex items-center text-gray-700">
-                    <img
-                      src="/resale-card-img/garage.svg"
-                      className="w-3 h-3 sm:w-4 sm:h-4 mr-1"
-                      alt="garage"
-                    />
-                    <span className="text-xs sm:text-sm whitespace-nowrap">
-                      {Math.floor(curElem.GarageSpaces)} Garage
-                    </span>
-                  </div>
-                )}
+                {curElem.BuildingAreaTotal &&
+                  Number(curElem.BuildingAreaTotal) > 0 && (
+                    <div>
+                      <img
+                        src="/resale-card-img/ruler.svg"
+                        className="w-3 mr-[2px] inline"
+                        alt="washrooms"
+                      />
+                      <span>
+                        {Math.floor(curElem.BuildingAreaTotal)}{" "}
+                        <span className="hidden sm:inline">Sq. Ft.</span>
+                      </span>
+                    </div>
+                  )}
               </div>
 
               {/* Address */}
               <p className="text-gray-600 text-sm mb-2">
                 {curElem.StreetName ? (
-                  `${curElem.Street} ${curElem.StreetName} ${curElem.StreetAbbreviation} ${curElem.Municipality}, Ontario`
+                  `${curElem.StreetNumber} ${curElem.StreetName} ${curElem.StreetSuffix} ${curElem.City}, Ontario`
                 ) : (
                   <span className="p-4"></span>
                 )}
@@ -199,9 +199,11 @@ const ResaleCard = ({ curElem, small = false, showDecreasedPrice = false }) => {
 
               {/* MLS and Brokerage Info */}
               <div className="pt-2 border-t border-gray-200">
-                <p className="text-xs text-gray-500">MLS® {curElem.MLS}</p>
                 <p className="text-xs text-gray-500">
-                  Listed by {curElem.ListBrokerage}
+                  MLS® {curElem.ListingKey}
+                </p>
+                <p className="text-xs text-gray-500">
+                  Listed by {curElem.ListOfficeName}
                 </p>
               </div>
             </div>

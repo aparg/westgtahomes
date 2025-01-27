@@ -10,8 +10,8 @@ export const slugGenerator = (listing) => {
     parts.push(streetName);
   }
 
-  if (listing?.StreetAbbreviation) {
-    parts.push(listing.StreetAbbreviation);
+  if (listing?.StreetSuffix) {
+    parts.push(listing.StreetSuffix);
   }
 
   if (listing?.MLS) {

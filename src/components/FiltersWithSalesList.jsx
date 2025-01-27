@@ -5,7 +5,7 @@ import SalesList from "./SalesList";
 import Filters from "./Filters";
 
 //HELPERS
-import { capitalizeFirstLetter } from "@/helpers/capitalizeFIrstLetter";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 
 //CONSTANT
 import { bedCount, saleLease, houseType, washroomCount } from "@/constant";
@@ -90,7 +90,7 @@ const FiltersWithSalesList = ({
       const hotSales = [];
       const remainingSales = [];
       salesData?.forEach((data) => {
-        if (is24HoursAgo(data.TimestampSql) && hotSales.length < 5) {
+        if (is24HoursAgo(data.OriginalEntryTimestamp) && hotSales.length < 5) {
           hotSales.push(data);
         } else {
           remainingSales.push(data);
@@ -127,14 +127,11 @@ const FiltersWithSalesList = ({
     const payload = {
       saleLease: Object.values(saleLease).find(
         (saleLeaseObj) => saleLeaseObj.name === params.saleLease
-      )?.value,
-      bed: Object.values(bedCount).find((bedObj) => bedObj.name === params.bed)
-        ?.value,
+      )?.name,
+      bed: params.bed,
       minListPrice: Number(params.priceRange?.min ?? 0),
       maxListPrice: Number(params.priceRange?.max ?? 0),
       houseType: _getMergedHouseType(params),
-      hasBasement: params.hasBasement,
-      sepEntrance: params.sepEntrance,
       washroom: params.washroom,
       priceDecreased: params.priceDecreased,
     };
@@ -147,6 +144,7 @@ const FiltersWithSalesList = ({
     setLoading(true);
     // console.log(payload);
     const filteredSalesData = await getFilteredRetsData(queryParams);
+
     setSalesData(filteredSalesData);
     if (!filteredSalesData?.length == 0) {
       setOffset(offset);
@@ -232,7 +230,7 @@ const FiltersWithSalesList = ({
           <div className="w-[20px] mx-auto">
             <ImSpinner size="sm" />
           </div>
-        ) : salesData.length > 0 ? (
+        ) : salesData?.length > 0 ? (
           <>
             {selected === 1 && <HotListings salesData={hotSales} />}
             <div

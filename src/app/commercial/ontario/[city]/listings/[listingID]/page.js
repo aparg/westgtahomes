@@ -9,6 +9,7 @@ import {
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFIrstLetter";
 import {
   fetchDataFromMLS,
+  getImageUrls,
   // fetchStatsFromMLS,
   getSalesData,
 } from "@/api/getSalesData";
@@ -63,35 +64,32 @@ const page = async ({ params }) => {
     INITIAL_OFFSET,
     INITIAL_LIMIT,
     formattedSlug,
-    main_data?.TypeOwnSrch
+    main_data?.PropertyType
   );
 
   // const statsValue = await fetchStatsFromMLS({
-  //   listingType: main_data?.TypeOwnSrch,
-  //   municipality: main_data?.Municipality,
-  //   saleLease: main_data?.SaleLease,
+  //   listingType: main_data?.PropertyType,
+  //   municipality: main_data?.City,
+  //   saleLease: main_data?.TransactionType,
   // });
   // main_data.avg = parseFloat(statsValue.avg.toFixed(0)).toLocaleString();
-  const imageURLs = generateCommercialImageURLs(
-    listingID,
-    parseInt(main_data?.PhotoCount)
-  );
+  const imageURLs = await getImageUrls({ MLS: main_data?.ListingKey });
 
   const breadcrumbItems = [
     { label: "Ontario", href: "/ontario" },
     { label: formattedSlug, href: generateURL({ cityVal: city }) },
     {
-      label: `${main_data.Street} ${main_data.StreetName}${" "}
-    ${main_data.StreetAbbreviation}`,
+      label: `${main_data.StreetNumber} ${main_data.StreetName}${" "}
+    ${main_data.StreetSuffix}`,
       href: "#",
     },
   ];
 
-  // const address = `${main_data?.Street} ${main_data?.StreetName} ${main_data?.StreetAbbreviation}`;
+  // const address = `${main_data?.StreetNumber} ${main_data?.StreetName} ${main_data?.StreetSuffix}`;
   const address = [
     main_data?.Street,
     main_data?.StreetName,
-    main_data?.StreetAbbreviation,
+    main_data?.StreetSuffix,
   ]
     .filter(Boolean)
     .join(" ");
@@ -117,10 +115,12 @@ const page = async ({ params }) => {
                 <Gallery data={imageURLs} />
                 <div className="space-x-2 order-2 sm:order-1 absolute bottom-2 left-2">
                   <button className="bg-[#CC0B0B] p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
-                    <TimeAgo modificationTimestamp={main_data.TimestampSql} />
+                    <TimeAgo
+                      modificationTimestamp={main_data.OriginalEntryTimestamp}
+                    />
                   </button>
                   <button className="bg-[#CC0B0B] p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
-                    <span>{main_data.TypeOwn1Out}</span>
+                    <span>{main_data.PropertySubType}</span>
                   </button>
                 </div>
               </div>
@@ -144,9 +144,7 @@ const page = async ({ params }) => {
                     id="contact"
                   >
                     <BookShowingForm
-                      address={
-                        address + `, ${main_data?.Municipality}, Ontario`
-                      }
+                      address={address + `, ${main_data?.City}, Ontario`}
                     ></BookShowingForm>
                   </div>
                   <div className="mt-24 mb-10 col-span-4">
@@ -158,7 +156,7 @@ const page = async ({ params }) => {
                 <section className="additonal__listing w-full mx-auto mt-24">
                   <PropertyDisplaySection
                     title={`Similar Homes nearby in ${
-                      main_data?.Municipality || "Ontario"
+                      main_data?.City || "Ontario"
                     }`}
                     subtitle={`Check out 100+ listings near this property. Listings updated daily`}
                     exploreAllLink={generateURL({
@@ -166,10 +164,10 @@ const page = async ({ params }) => {
                         houseType[
                           Object.keys(houseType).find(
                             (key) =>
-                              houseType[key].value == main_data?.TypeOwnSrch
+                              houseType[key].value == main_data?.PropertyType
                           )
                         ]?.name,
-                      saleLeaseVal: main_data?.SaleLease,
+                      saleLeaseVal: main_data?.TransactionType,
                       cityVal: city,
                     })}
                   >
@@ -203,7 +201,7 @@ export default page;
 //     openGraph: {
 //       images: await fetch(imageURLs[0]),
 //     },
-//     title: `${main_data?.Street} ${main_data?.StreetName} ${main_data?.StreetAbbreviation}`,
-//     description: `${main_data?.TypeOwn1Out}.${main_data?.Municipality}`,
+//     title: `${main_data?.StreetNumber} ${main_data?.StreetName} ${main_data?.StreetSuffix}`,
+//     description: `${main_data?.PropertySubType}.${main_data?.City}`,
 //   };
 // }

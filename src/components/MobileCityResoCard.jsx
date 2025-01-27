@@ -79,11 +79,13 @@ const MobileCityResoCard = React.forwardRef(
                     {/* <span
                       className={`shadow-lg p-1 ms-1 text-black text-xs card-data`}
                     >
-                      {curElem.ApproxSquareFootage} ft<sup>2</sup>
+                      {curElem.BuildingAreaTotal} ft<sup>2</sup>
                     </span> */}
                   </h2>
                   <div className="text-xs my-1">
-                    <TimeAgo modificationTimestamp={curElem.TimestampSql} />
+                    <TimeAgo
+                      modificationTimestamp={curElem.OriginalEntryTimestamp}
+                    />
                   </div>
                 </div>
                 <div className="text-sm">
@@ -94,10 +96,8 @@ const MobileCityResoCard = React.forwardRef(
                   <div className="text-black truncate text-ellipsis">
                     <div className="text-dark bva text-ellipsis text-sm">
                       {curElem.StreetName ? (
-                        `${curElem.Street} ${curElem.StreetName}${" "}
-                    ${curElem.StreetAbbreviation} ${
-                          curElem.Municipality
-                        }, Ontario`
+                        `${curElem.StreetNumber} ${curElem.StreetName}${" "}
+                    ${curElem.StreetSuffix} ${curElem.Municipality}, Ontario`
                       ) : (
                         <span className="p-4"></span>
                       )}
@@ -106,7 +106,7 @@ const MobileCityResoCard = React.forwardRef(
                 </div>
                 <div className="flex justify-between">
                   <div className="text-black text-sm rounded-md">
-                    {curElem.TypeOwn1Out}{" "}
+                    {curElem.PropertySubType}{" "}
                   </div>
                 </div>
               </div>

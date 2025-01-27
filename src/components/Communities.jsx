@@ -20,9 +20,9 @@ const Communities = ({ salesData = {} }) => {
               </h2>
               <ul className="space-y-1.5 md:space-y-2 text-center">
                 {properties &&
-                  properties.map((property) => (
+                  properties.map((property, idx) => (
                     <Link
-                      key={property.MLS}
+                      key={idx}
                       href={generateURL({
                         listingIDVal: property.MLS,
                         cityVal: city,

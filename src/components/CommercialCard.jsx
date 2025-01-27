@@ -42,8 +42,8 @@ const CommercialCard = ({ curElem, small = false }) => {
       parts.push(streetName);
     }
 
-    if (curElem.StreetAbbreviation) {
-      parts.push(curElem.StreetAbbreviation);
+    if (curElem.StreetSuffix) {
+      parts.push(curElem.StreetSuffix);
     }
 
     if (curElem.MLS) {
@@ -93,7 +93,9 @@ const CommercialCard = ({ curElem, small = false }) => {
                   )}
 
                   <div className="text-black text-xs p-[2px] rounded-md mx-1 bg-white flex items-center">
-                    <TimeAgo modificationTimestamp={curElem.TimestampSql} />
+                    <TimeAgo
+                      modificationTimestamp={curElem.OriginalEntryTimestamp}
+                    />
                   </div>
                 </div>
               </div>
@@ -124,8 +126,8 @@ const CommercialCard = ({ curElem, small = false }) => {
                 <div className="text-black truncate text-ellipsis">
                   <div className="text-dark bva">
                     {curElem.StreetName ? (
-                      `${curElem.Street} ${curElem.StreetName}${" "}
-                    ${curElem.StreetAbbreviation || ""} ${
+                      `${curElem.StreetNumber} ${curElem.StreetName}${" "}
+                    ${curElem.StreetSuffix || ""} ${
                         curElem.Municipality
                       }, Ontario`
                     ) : (

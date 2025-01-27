@@ -2,11 +2,11 @@ import dynamic from "next/dynamic";
 import Gallery from "@/components/Gallery";
 import Link from "next/link";
 import { residential } from "../../../../../api/routes/fetchRoutes";
-import { generateImageURLs } from "@/helpers/generateImageURLs";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFIrstLetter";
 import {
   fetchDataFromMLS,
   fetchStatsFromMLS,
+  getImageUrls,
   getSalesData,
 } from "../../../../../api/getSalesData";
 import BookShowingForm from "@/components/BookShowingForm";
@@ -45,9 +45,8 @@ const fetchData = async (listingID) => {
     `?$select=MLS='${listingID}'`
   );
 
-  const resMLSDetail = await fetch(urlToFetchMLSDetail, options);
-  const data = await resMLSDetail.json();
-  return data.results[0];
+  const data = await fetchDataFromMLS(listingID);
+  return data;
 };
 
 const page = async ({ params }) => {
@@ -62,35 +61,25 @@ const page = async ({ params }) => {
     INITIAL_OFFSET,
     INITIAL_LIMIT,
     formattedSlug,
-    main_data?.TypeOwnSrch
+    main_data?.ProeprtySubType
   );
-
-  const statsValue = await fetchStatsFromMLS({
-    listingType: main_data?.TypeOwnSrch,
-    municipality: main_data?.Municipality,
-    saleLease: main_data?.SaleLease,
-  });
-  main_data.avg = parseFloat(statsValue.avg.toFixed(0)).toLocaleString();
-  const imageURLs = generateImageURLs(
-    listingIDValue,
-    parseInt(main_data?.PhotoCount)
-  );
+  const imageURLs = await getImageUrls({ MLS: main_data?.ListingKey });
 
   const breadcrumbItems = [
     { label: "Ontario", href: "/ontario" },
     { label: formattedSlug, href: generateURL({ cityVal: cityValue }) },
     {
-      label: `${main_data.Street} ${main_data.StreetName}${" "}
-    ${main_data.StreetAbbreviation}`,
+      label: `${main_data.StreetNumber} ${main_data.StreetName}${" "}
+    ${main_data.StreetSuffix}`,
       href: "#",
     },
   ];
 
-  // const address = `${main_data?.Street} ${main_data?.StreetName} ${main_data?.StreetAbbreviation}`;
+  // const address = `${main_data?.StreetNumber} ${main_data?.StreetName} ${main_data?.StreetSuffix}`;
   const address = [
     main_data?.Street,
     main_data?.StreetName,
-    main_data?.StreetAbbreviation,
+    main_data?.StreetSuffix,
   ]
     .filter(Boolean)
     .join(" ");
@@ -136,13 +125,15 @@ const page = async ({ params }) => {
             </div>
             <section className="padding-top w-full text-sm flex flex-col items-center justify-center gy-2 relative">
               <div className="hidden sm:block relative">
-                <Gallery data={imageURLs} photoCount={main_data.PhotoCount} />
+                <Gallery data={imageURLs} />
                 <div className="space-x-2 order-2 sm:order-1 absolute bottom-2 left-2">
                   <button className="bg-badge-color p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
-                    <TimeAgo modificationTimestamp={main_data.TimestampSql} />
+                    <TimeAgo
+                      modificationTimestamp={main_data.OriginalEntryTimestamp}
+                    />
                   </button>
                   <button className="bg-badge-color p-1 text-white text-xs font-bold mt-1 mb-2 sm:my-0 w-fit-content rounded-md">
-                    <span>{main_data.TypeOwn1Out}</span>
+                    <span>{main_data.PropertySubType}</span>
                   </button>
                 </div>
               </div>
@@ -168,9 +159,7 @@ const page = async ({ params }) => {
                     id="contact"
                   >
                     <BookShowingForm
-                      address={
-                        address + `, ${main_data?.Municipality}, Ontario`
-                      }
+                      address={address + `, ${main_data?.City}, Ontario`}
                     ></BookShowingForm>
                   </div>
                   <div className="mt-24 mb-10 col-span-4">
@@ -182,7 +171,7 @@ const page = async ({ params }) => {
                 <section className="additonal__listing w-full mx-auto mt-24">
                   <PropertyDisplaySection
                     title={`Similar Homes nearby in ${
-                      main_data?.Municipality || "Ontario"
+                      main_data?.City || "Ontario"
                     }`}
                     subtitle={`Check out 100+ listings near this property. Listings updated daily`}
                     exploreAllLink={generateURL({
@@ -190,10 +179,10 @@ const page = async ({ params }) => {
                         houseType[
                           Object.keys(houseType).find(
                             (key) =>
-                              houseType[key].value == main_data?.TypeOwnSrch
+                              houseType[key].value == main_data?.ProeprtySubType
                           )
                         ]?.name,
-                      saleLeaseVal: main_data?.SaleLease,
+                      saleLeaseVal: main_data?.TransactionType,
                       cityVal: city,
                     })}
                   >
@@ -219,7 +208,7 @@ export async function generateMetadata({ params }, parent) {
   const lastPart = parts[parts.length - 1];
   const listingIDValue = lastPart;
   const main_data = await fetchData(listingIDValue);
-  const imageURLs = generateImageURLs(listingIDValue);
+  const imageURLs = getImageUrls(listingIDValue);
   return {
     ...parent,
     alternates: {
@@ -228,7 +217,7 @@ export async function generateMetadata({ params }, parent) {
     openGraph: {
       images: imageURLs[0],
     },
-    title: `${main_data?.Street} ${main_data?.StreetName} ${main_data?.StreetAbbreviation}`,
-    description: `${main_data?.TypeOwn1Out}.${main_data?.Municipality}`,
+    title: `${main_data?.StreetNumber} ${main_data?.StreetName} ${main_data?.StreetSuffix}`,
+    description: `${main_data?.PropertySubType}.${main_data?.City}`,
   };
 }

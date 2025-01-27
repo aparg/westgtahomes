@@ -45,7 +45,7 @@ const PropertiesDisplayer = ({
                     MLS={property.MLS}
                     city={property.Municipality}
                     address={property.Address}
-                    type={property.TypeOwn1Out}
+                    type={property.PropertySubType}
                     key={idx}
                     imageGradient={imageGradient}
                   />
@@ -62,7 +62,7 @@ const PropertiesDisplayer = ({
                     MLS={property.MLS}
                     city={property.Municipality}
                     address={property.Address}
-                    type={property.TypeOwn1Out}
+                    type={property.PropertySubType}
                     key={idx}
                     imageGradient={imageGradient}
                   />

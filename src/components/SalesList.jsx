@@ -98,7 +98,7 @@ const SalesList = ({
         <>
           {salesData.map((curElem, index) => {
             return (
-              <div key={curElem.MLS}>
+              <div key={index}>
                 <script
                   key={curElem.Address}
                   type="application/ld+json"
