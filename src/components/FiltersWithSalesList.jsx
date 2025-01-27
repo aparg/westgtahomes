@@ -5,7 +5,7 @@ import SalesList from "./SalesList";
 import Filters from "./Filters";
 
 //HELPERS
-import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFIrstLetter";
 
 //CONSTANT
 import { bedCount, saleLease, houseType, washroomCount } from "@/constant";
