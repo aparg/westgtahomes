@@ -89,12 +89,12 @@ const HeroSection = () => {
               >
                 Homes Across Ontario
               </Link>
-              <Link
+              {/* <Link
                 href="/commercial/ontario"
                 className="px-4 py-2 rounded-lg border-2 bg-black text-white font-bold transition-colors duration-300 hover:bg-primary-green hover:text-white text-sm md:text-md"
               >
                 Commercial Properties
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

@@ -234,18 +234,33 @@ export const getCommercialSalesData = async (
   city,
   listingType
 ) => {
-  const url = residential.count.replace(
-    "$query",
-    "$filter=" + queryArray.join(" and ")
-  );
-  const options = {
-    method: "GET",
-    headers: {
-      Authorization: process.env.BEARER_TOKEN_FOR_API,
-    },
-    // cache: "no-store",
-  };
-  const response = await fetch(url, options);
-  const jsonResponse = await response.json();
-  return jsonResponse;
+  try {
+    let selectQuery = `${
+      city && `Municipality=${city || ""},`
+    }SaleLease='Sale'`;
+
+    const queriesArray = [
+      `$select=${selectQuery}`,
+      `$skip=${offset}`,
+      `$limit=${limit}`,
+    ];
+
+    const url = commercial.properties.replace(
+      "$query",
+      `?${queriesArray.join("&")}`
+    );
+    const options = {
+      method: "GET",
+    };
+
+    if (listingType) {
+      selectQuery += `,TypeOwnSrch=${listingType}`;
+    }
+    const res = await fetch(url, options);
+    const data = await res.json();
+    return data.results;
+  } catch (error) {
+    console.error(error);
+    throw new Error(`An error happened in getSalesData: ${error}`);
+  }
 };

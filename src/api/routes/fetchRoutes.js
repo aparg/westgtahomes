@@ -6,7 +6,7 @@ export const residential = {
 };
 
 export const commercial = {
-  properties: `${BASE_URL}/commercial/Properties/$query`,
-  photos: `${BASE_URL}/commercialPhotos/MLS-index.jpeg`,
-  statistics: `${BASE_URL}/commercial/stats/$query`,
+  properties: `${BASE_URL_SERVER}/commercial/Properties/$query`,
+  photos: `${BASE_URL_SERVER}/commercialPhotos/MLS-index.jpeg`,
+  statistics: `${BASE_URL_SERVER}/commercial/stats/$query`,
 };
