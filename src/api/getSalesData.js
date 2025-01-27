@@ -227,3 +227,25 @@ export const searchProperties = async (inputValue) => {
   const searchedProperties = await response.json();
   return searchedProperties.value;
 };
+
+export const getCommercialSalesData = async (
+  offset,
+  limit,
+  city,
+  listingType
+) => {
+  const url = residential.count.replace(
+    "$query",
+    "$filter=" + queryArray.join(" and ")
+  );
+  const options = {
+    method: "GET",
+    headers: {
+      Authorization: process.env.BEARER_TOKEN_FOR_API,
+    },
+    // cache: "no-store",
+  };
+  const response = await fetch(url, options);
+  const jsonResponse = await response.json();
+  return jsonResponse;
+};
