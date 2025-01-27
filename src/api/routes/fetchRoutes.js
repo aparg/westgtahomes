@@ -5,8 +5,8 @@ export const residential = {
   search: `${BASE_URL}/odata/Property?$filter=StreetName has '$value' or PostalCode has '$value' or ListingKey eq '$value' or contains(City,'$value')&$select=UnparsedAddress,City&$top=5`,
 };
 
-export const commercial = {
-  properties: `${BASE_URL_SERVER}/commercial/Properties/$query`,
-  photos: `${BASE_URL_SERVER}/commercialPhotos/MLS-index.jpeg`,
-  statistics: `${BASE_URL_SERVER}/commercial/stats/$query`,
-};
+// export const commercial = {
+//   properties: `${BASE_URL_SERVER}/commercial/Properties/$query`,
+//   photos: `${BASE_URL_SERVER}/commercialPhotos/MLS-index.jpeg`,
+//   statistics: `${BASE_URL_SERVER}/commercial/stats/$query`,
+// };
