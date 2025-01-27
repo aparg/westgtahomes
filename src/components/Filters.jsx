@@ -212,7 +212,7 @@ const Filters = ({ filterState, setFilterState, fetchFilteredData }) => {
               filterObj={houseType}
             />
           </div>
-          <div className="flex justify-center sm:justify-start mx-[0.1rem]">
+          {/* <div className="flex justify-center sm:justify-start mx-[0.1rem]">
             <DropdownFilter
               options={
                 filterState.saleLease == saleLease.sale.name
@@ -234,7 +234,7 @@ const Filters = ({ filterState, setFilterState, fetchFilteredData }) => {
                   : priceRangesLeaseProperties
               }
             />
-          </div>
+          </div> */}
         </div>
       </div>
 
