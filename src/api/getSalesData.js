@@ -10,7 +10,10 @@ export const getPropertiesCount = async ({ propertyType, city, saleLease }) => {
     queryArray.push(`PropertySubType eq '${propertyType}'`);
   }
   if (city) {
-    queryArray.push(`City eq '${capitalizeFirstLetter(city)}'`);
+    if (city == "Etobicoke") {
+      queryArray.push(`contaions(CityRegion,'Etobicoke') or `);
+    }
+    queryArray.push(`contains(City,'${capitalizeFirstLetter(city)}')`);
   }
   if (saleLease) {
     queryArray.push(`TransactionType eq '${saleLease}'`);
@@ -31,18 +34,34 @@ export const getPropertiesCount = async ({ propertyType, city, saleLease }) => {
   const jsonResponse = await response.json();
   return jsonResponse;
 };
-export const getSalesData = async (offset, limit, city, listingType) => {
+export const getSalesData = async (
+  offset,
+  limit,
+  city,
+  listingType,
+  soldData = false
+) => {
   try {
-    let filterQuery = `${
+    let filterQuery = "";
+    if (city == "Etobicoke") {
+      filterQuery = `contains(CityRegion,'Etobicoke') or `;
+    }
+    filterQuery += `${
       city && `contains(City,'${city || ""}') and `
     }TransactionType eq 'For Sale'`;
     // const lowriseOnly = `TypeOwnSrch='.S.',TypeOwnSrch='.D.',TypeOwnSrch='.A.',TypeOwnSrch='.J.',TypeOwnSrch='.K.'`;
+    if (soldData) filterQuery += " and MlsStatus eq 'Sold'";
     const queriesArray = [
       `$filter=${filterQuery}`,
       `$skip=${offset}`,
       `$top=${limit}`,
     ];
 
+    if (soldData) {
+      queriesArray.push(`$orderby=SoldEntryTimestamp desc`);
+    } else {
+      queriesArray.push(`$orderby=OriginalEntryTimestamp desc`);
+    }
     const url = residential.properties.replace(
       "$query",
       `?${queriesArray.join("&")}`
@@ -50,7 +69,9 @@ export const getSalesData = async (offset, limit, city, listingType) => {
     const options = {
       method: "GET",
       headers: {
-        Authorization: process.env.BEARER_TOKEN_FOR_API,
+        Authorization: !soldData
+          ? process.env.BEARER_TOKEN_FOR_API
+          : process.env.BEARER_TOKEN_FOR_VOW,
       },
     };
     if (listingType) {
@@ -65,11 +86,10 @@ export const getSalesData = async (offset, limit, city, listingType) => {
   }
 };
 
-export const getFilteredRetsData = async (queryParams) => {
+export const getFilteredRetsData = async (queryParams, soldData = false) => {
   // const lowriseOnly = `TypeOwnSrch='.S.',TypeOwnSrch='.D.',TypeOwnSrch='.A.',TypeOwnSrch='.J.',TypeOwnSrch='.K.'`;
   try {
     //all the necessary queries possible
-    console.log(queryParams);
     let selectQuery = `${
       queryParams.city ? `contains(City,'${queryParams.city}')` : ""
     }${
@@ -125,6 +145,7 @@ export const getFilteredRetsData = async (queryParams) => {
     }
 
     let url = "";
+
     if (queryParams.propertyType == "commercial") {
       url = commercial.properties.replace(
         "$query",
@@ -139,11 +160,12 @@ export const getFilteredRetsData = async (queryParams) => {
     const options = {
       method: "GET",
       headers: {
-        Authorization: process.env.BEARER_TOKEN_FOR_API,
+        Authorization: !soldData
+          ? process.env.BEARER_TOKEN_FOR_API
+          : process.env.BEARER_TOKEN_FOR_VOW,
       },
       // cache: "no-store",
     };
-    console.log(url);
     const res = await fetch(url, options);
 
     const data = await res.json();
@@ -160,12 +182,18 @@ export const getFilteredRetsData = async (queryParams) => {
   }
 };
 
-export const getImageUrls = async ({ MLS, thumbnailOnly = false }) => {
+export const getImageUrls = async ({
+  MLS,
+  thumbnailOnly = false,
+  soldData = false,
+}) => {
   if (MLS) {
     const options = {
       method: "GET",
       headers: {
-        Authorization: process.env.BEARER_TOKEN_FOR_API,
+        Authorization: !soldData
+          ? process.env.BEARER_TOKEN_FOR_API
+          : process.env.BEARER_TOKEN_FOR_VOW,
       },
       // cache: "no-store",
     };
@@ -176,7 +204,7 @@ export const getImageUrls = async ({ MLS, thumbnailOnly = false }) => {
       imageLink +=
         " and ImageSizeDescription eq 'Medium' and PreferredPhotoYN eq true";
     else imageLink += " and ImageSizeDescription eq 'Largest'";
-
+    // imageLink += "& $top=1";
     let response = await fetch(imageLink.replace("MLS", MLS), options);
     let jsonResponse = await response.json();
     if (jsonResponse.value.length == 0 && thumbnailOnly) {
@@ -187,17 +215,23 @@ export const getImageUrls = async ({ MLS, thumbnailOnly = false }) => {
       );
       jsonResponse = await response.json();
     }
-    const urls = jsonResponse.value.map((data) => data.MediaURL);
+    const urls = jsonResponse.value
+      .sort(
+        (a, b) => (b.PreferredPhotoYN === true) - (a.PreferredPhotoYN === true)
+      )
+      .map((data) => data.MediaURL);
     return urls;
   }
 };
 
-export const fetchDataFromMLS = async (listingID) => {
+export const fetchDataFromMLS = async (listingID, soldData = false) => {
   try {
     const options = {
       method: "GET",
       headers: {
-        Authorization: process.env.BEARER_TOKEN_FOR_API,
+        Authorization: !soldData
+          ? process.env.BEARER_TOKEN_FOR_API
+          : process.env.BEARER_TOKEN_FOR_VOW,
       },
     };
     const queriesArray = [`$filter=ListingKey eq '${listingID}'`];
@@ -205,7 +239,6 @@ export const fetchDataFromMLS = async (listingID) => {
       "$query",
       `?${queriesArray.join("&")}`
     );
-    console.log(urlToFetchMLSDetail);
     const resMLSDetail = await fetch(urlToFetchMLSDetail, options);
     const data = await resMLSDetail.json();
     return data.value[0];
@@ -214,7 +247,105 @@ export const fetchDataFromMLS = async (listingID) => {
   }
 };
 
+export const fetchStatsFromMLS = async ({
+  listingType,
+  municipality,
+  saleLease,
+}) => {
+  const options = {
+    method: "GET",
+  };
+  const queriesArray = [
+    `$select=Municipality=${municipality},TypeOwnSrch=${listingType},SaleLease=${saleLease
+      .split(" ")[1]
+      .toLowerCase()}`,
+    `$metrics=avg,median,sd`,
+  ];
+  const urlToFetchMLSDetail = residential.statistics.replace(
+    "$query",
+    `?${queriesArray.join("&")}`
+  );
+  const resMLSDetail = await fetch(urlToFetchMLSDetail, options);
+  const data = await resMLSDetail.json();
+  return data.results;
+};
+
+const cache = {}; // In-memory cache
+
+export const fetchOpenHouse = async ({ city = null }) => {
+  const options = {
+    method: "GET",
+    headers: {
+      Authorization: process.env.BEARER_TOKEN_FOR_VOW,
+    },
+  };
+
+  // Check if we have cached data and it's still valid
+
+  const response = await fetch(residential.openHouse, options);
+  const responseJson = await response.json();
+  const value = responseJson.value;
+  const allValues = []; // To store all fetched values
+  // Number of elements to fetch at a time
+
+  const batchSize = 10;
+  const currentTime = Date.now();
+  const cacheKey = city?.toLowerCase() || "ontario"; // Use city as cache key
+  if (cache[cacheKey] && currentTime - cache[cacheKey].timestamp < 3600000) {
+    console.log("Returning cached data for city:", city);
+    return cache[cacheKey].data; // Return cached data
+  }
+  for (let i = 0; i < value.length; i += batchSize) {
+    const batchValues = value.slice(i, i + batchSize);
+    const modifiedString = batchValues.map(
+      (obj) => `ListingKey eq '${obj.ListingKey}'`
+    );
+    const orString = modifiedString.join(" or ");
+    let propertyFetchString;
+    if (city) {
+      propertyFetchString = residential.properties.replace(
+        "$query",
+        `?$filter=contains(City,'${capitalizeFirstLetter(
+          city
+        )}') and (${orString})`
+      );
+    } else {
+      propertyFetchString = residential.properties.replace(
+        "$query",
+        `?$filter=(${orString})`
+      );
+    }
+    const res = await fetch(propertyFetchString, options);
+    const resJson = await res.json();
+
+    const compoundObject = resJson.value.map((obj) => {
+      return {
+        ...obj,
+        ...batchValues.find((ohObj) => ohObj.ListingKey == obj.ListingKey),
+      };
+    });
+    allValues.push(...compoundObject); // Add fetched values to the allValues array
+
+    // Break the loop if we have collected enough values
+    if (allValues.length >= 20) {
+      break;
+    }
+
+    cache[cacheKey] = {
+      data: allValues,
+      timestamp: currentTime,
+    };
+  }
+
+  // Store the fetched data in cache with a timestamp
+
+  return allValues; // Return the fetched data
+};
+
 export const searchProperties = async (inputValue) => {
+  console.log(
+    residential.search.replaceAll("$value", capitalizeFirstLetter(inputValue))
+  );
   const response = await fetch(
     residential.search.replaceAll("$value", capitalizeFirstLetter(inputValue)),
     {
@@ -226,41 +357,4 @@ export const searchProperties = async (inputValue) => {
   );
   const searchedProperties = await response.json();
   return searchedProperties.value;
-};
-
-export const getCommercialSalesData = async (
-  offset,
-  limit,
-  city,
-  listingType
-) => {
-  try {
-    let selectQuery = `${
-      city && `Municipality=${city || ""},`
-    }SaleLease='Sale'`;
-
-    const queriesArray = [
-      `$select=${selectQuery}`,
-      `$skip=${offset}`,
-      `$limit=${limit}`,
-    ];
-
-    const url = commercial.properties.replace(
-      "$query",
-      `?${queriesArray.join("&")}`
-    );
-    const options = {
-      method: "GET",
-    };
-
-    if (listingType) {
-      selectQuery += `,TypeOwnSrch=${listingType}`;
-    }
-    const res = await fetch(url, options);
-    const data = await res.json();
-    return data.results;
-  } catch (error) {
-    console.error(error);
-    throw new Error(`An error happened in getSalesData: ${error}`);
-  }
 };
